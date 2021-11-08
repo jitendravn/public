@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 
@@ -124,10 +124,11 @@
 
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- ajax delete request --}}
     <script>
-        $(document).on('click', '#deleteBlog', function() {
+        $(document).on('click', '#deleteBlog', function(e) {
+            e.preventDefault();
             var id = $(this).data('id');
            
             if (confirm('Are You sure you want to delete this blog')) {
@@ -142,11 +143,12 @@
                     success: function(response) {
                         if(response.status==1)
                         {   
-                            $('.delete').val(response.msg);
+                            swal(response.msg);
+                            window.location.reload();
                         }
                         else
                         {
-                            alert('something went wrong');
+                            swal(response.msg);
                         }
                     }
                 });

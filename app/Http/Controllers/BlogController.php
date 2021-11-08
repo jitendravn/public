@@ -96,9 +96,17 @@ class BlogController extends Controller
     }
 
 
-    public function deleteBlog(Request $request)
+    public function delete(Request $request)
     {
-        Blog::find($request->id)->delete();
-        return response()->json('delete', 'Blog Deleted Successfully');
+        $blog= Blog::find($request->id)->delete();
+        if($blog)
+        {
+
+            return response()->json(['status'=>'1','msg'=>'Blog Deleted Successfully']);
+        }
+        else
+        {
+            return response()->json(['status'=>'0','msg'=>'Something Went wrong']);
+        }
     }
 }
