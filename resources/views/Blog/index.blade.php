@@ -110,7 +110,7 @@
                                                 alt="{{ $item->title }}" class="img-fluid"></td>
                                         <td><a href="{{ url('edit/' . $item->id) }}" class="btn btn-warning">Edit</a>
                                         </td>
-                                        <td><button data-id="{{ $item->id }}" id="deleteBlog"
+                                        <td><button data-id="{{ $item->id }}" value="{{$item->id}}" onclick="deleteBlog({{$item->id}})"
                                                 class="btn btn-danger">Delete</button>
                                             @csrf
                                         </td>
@@ -137,37 +137,40 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- ajax delete request --}}
     <script>
-        $(document).on('click', '#deleteBlog', function(e) {
-            e.preventDefault();
+        $(document).ready( function() {
+            function deleteBlog(id){
+                console.log('you clicked it')
+            
+           
             var id = $(this).data('id');
             var parent = $(this).parent();
-            if (confirm('Are You sure you want to delete this blog')) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: "delete",
-                    url: "{{ route('deleteBlog') }}",
-                    data: {
-                        id: id
-                    },
-                    dataType: "json",
-                    success: function(response) {
-                        if (response.status == 1) {
+            // if (confirm('Are You sure you want to delete this blog')) {
+            //     $.ajax({
+            //         headers: {
+            //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //         },
+            //         type: "delete",
+            //         url: "{{ route('deleteBlog') }}",
+            //         data: {
+            //             id: id
+            //         },
+            //         dataType: "json",
+            //         success: function(response) {
+            //             if (response.status == 1) {
 
-                            swal('success', response.msg, '');
-                            console.warn('#row'+id);
-                            parent.slideUp(300, function() {
-                                parent.closest("#row"+id).remove();
-                            });
+            //                 swal('success', response.msg, '');
+            //                 console.warn('#row'+id);
+            //                 parent.slideUp(300, function() {
+            //                     parent.closest("#row"+id).remove();
+            //                 });
 
 
-                        } else {
-                            swal('warning', response.msg, '');
-                            window.location.reload();
-                        }
-                    }
-                });
+            //             } else {
+            //                 swal('warning', response.msg, '');
+            //                 window.location.reload();
+            //             }
+            //         }
+            //     });
             }
 
 
