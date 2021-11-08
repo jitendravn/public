@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 
-    <title>Hello, world!</title>
+    <title>Blog </title>
 </head>
 
 <body>
@@ -118,7 +118,7 @@
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->author }}</td>
                                         <td><a href="{{ url('status', $item->id) }}"
-                                                class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</button>
+                                                class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</a>
                                         </td>
                                         <td><img src="{{ 'uploads/blog/' . $item->image }}"
                                                 alt="{{ $item->title }}" class="img-fluid"></td>

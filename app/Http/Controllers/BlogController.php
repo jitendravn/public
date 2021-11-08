@@ -116,20 +116,10 @@ class BlogController extends Controller
             return response()->json(['status' => '0', 'msg' => 'Something Went wrong']);
         }
     }
-    public function blogStatus(Request $request)
-    {
-        $blog = Blog::find($request->id);
-        $status = $blog->status = $request->status == 1 ? '0' : '1';
-        if ($status) {
-
-            return response()->json(['status' => '1', 'msg' => 'Blog Deleted Successfully']);
-        } else {
-            return response()->json(['status' => '0', 'msg' => 'Something Went wrong']);
-        }
-    }
+    
     public function status($id)
     {
-        $blog= Blog::find($id)->first();
+        $blog= Blog::find($id);
 
         if($blog->status=='1')
         {
