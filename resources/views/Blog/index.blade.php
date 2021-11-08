@@ -90,6 +90,7 @@
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th>Author</th>
+                                    <th>Status</th>
                                     <th>Image</th>
                                     <th colspan="2" class="text-center">Action</th>
                                 </tr>
@@ -150,12 +151,14 @@
                     success: function(response) {
                         if(response.status==1)
                         {   
-                            swal(response.msg);
-                            window.location.reload();
+                            
+                            swal('success',response.msg,'');
+                            $(".delete" +id).html(response.msg);
+                           
                         }
                         else
                         {
-                            swal(response.msg);
+                            swal('warning',response.msg,'' );
                             window.location.reload();
                         }
                     }
