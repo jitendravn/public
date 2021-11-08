@@ -98,7 +98,7 @@
 
                             <tbody>
                                 @forelse ($blog as $item)
-                                    <tr>
+                                    <tr id="tr">
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->title }}</td>
                                         <td>{{ $item->description }}</td>
@@ -157,7 +157,7 @@
 
                             swal('success', response.msg, '');
                             parent.slideUp(300, function() {
-                                parent.closest("tr").remove();
+                                parent.closest("#tr").remove();
                             });
 
 
@@ -172,7 +172,9 @@
 
 
         });
+
     </script>
+   
 </body>
 
 </html>
