@@ -51,10 +51,24 @@
                                 <span class="text-danger fw-bold">@error('author') ** {{ $message }}
                                     **@enderror</span>
                             </div>
+                            <div class="form-group mb-2 mt-2">
+                                <label for="">Blog_Status : </label>
+                                
+                                <input class="form-check-input" type="radio" name="status" value="1" {{$blog->status==1 ?'checked':''}}
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                   Active
+                                </label>
+                                <input class="form-check-input" type="radio" name="status" {{$blog->status==1?'checked':''}}  value="0" id="flexRadioDefault2" checked>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                 Inactive   
+                                </label>
+                                
+                            </div>
                             <div class="form-group mb-2">
                                 <label for="">Blog Image</label>
-                                <input type="file" name="image" class="form-control" accept="image/*" />
-                                   >
+                                <input type="file" name="image" class="form-control" value="{{$blog->image}}"accept="image/*" />
+                                   
                                 <span class="text-danger fw-bold">@error('image') ** {{ $message }}
                                     **@enderror</span>
                             </div>

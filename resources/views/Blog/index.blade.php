@@ -49,6 +49,20 @@
                                 <span class="text-danger fw-bold">@error('author') ** {{ $message }}
                                     **@enderror</span>
                             </div>
+                            <div class="form-group mb-2 mt-2">
+                                <label for="">Blog_Status : </label>
+                                
+                                <input class="form-check-input" type="radio" name="status" value="1"
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                   Active
+                                </label>
+                                <input class="form-check-input" type="radio" name="status"  value="0" id="flexRadioDefault2" checked>
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                 Inactive   
+                                </label>
+                                
+                            </div>
                             <div class="form-group mb-2">
                                 <label for="">Blog Image</label>
                                 <input type="file" name="image" class="form-control" accept="image/*" />
@@ -111,7 +125,7 @@
                                         <td><a href="{{ url('edit/' . $item->id) }}" class="btn btn-warning">Edit</a>
                                         </td>
                                         <td><button data-id="{{ $item->id }}" value="{{ $item->id }}"
-                                                onclick="deleteBlog({{$item->id}})"
+                                                onclick="deleteBlog({{ $item->id }})"
                                                 class="btn btn-danger">Delete</button>
                                             @csrf
                                         </td>
@@ -143,7 +157,7 @@
 
 
 
-    
+
             var parent = $(this).parent();
             if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
@@ -151,7 +165,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "delete",
-                    url: "{{ url('delete') }}/"+id,
+                    url: "{{ url('delete') }}/" + id,
                     data: {
                         id: id
                     },
@@ -161,12 +175,13 @@
 
                             swal('success', response.msg, '');
                             console.warn('#row');
-                            $('#row'+id).remove();
+                            $('#row' + id).remove();
 
 
                         } else {
                             swal('warning', response.msg, '');
-                            $('#row'+id).remove()                        }
+                            $('#row' + id).remove()
+                        }
                     }
                 });
             }

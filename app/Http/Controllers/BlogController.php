@@ -22,6 +22,7 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
+       
         $blog = new Blog();
         $request->validate(
             [
@@ -46,6 +47,7 @@ class BlogController extends Controller
         $blog->title = $request->title;
         $blog->description = $request->description;
         $blog->author = $request->author;
+        $blog->status=$request->status=='1'?'1':'0';
         $blog->image = $filename;
 
         $blog->save();
@@ -88,6 +90,8 @@ class BlogController extends Controller
         $blog->title = $request->title;
         $blog->description = $request->description;
         $blog->author = $request->author;
+        $blog->status=$request->status=='1'?'1':'0';
+
         $blog->image = $filename;
 
         $blog->update();
