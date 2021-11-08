@@ -98,7 +98,7 @@
 
                             <tbody>
                                 @forelse ($blog as $item)
-                                    <tr id="tr">
+                                    <tr id='row{{$item->id}}'>
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->title }}</td>
                                         <td>{{ $item->description }}</td>
@@ -156,9 +156,9 @@
                         if (response.status == 1) {
 
                             swal('success', response.msg, '');
-                            console.warn('#tr'+id);
+                            console.warn('#row'+id);
                             parent.slideUp(300, function() {
-                                parent.closest("#tr").remove();
+                                parent.closest("#row"+id).remove();
                             });
 
 
