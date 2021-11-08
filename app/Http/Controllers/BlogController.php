@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File ;
+use Illuminate\Support\Facades\File;
 
 class BlogController extends Controller
 {
@@ -41,12 +41,12 @@ class BlogController extends Controller
             $ext = $file->getClientOriginalExtension();
             $filename = time() . '.' . $ext;
             $file->move('uploads/blog', $filename);
-            $file->image=$filename;
+            $file->image = $filename;
         }
         $blog->title = $request->title;
         $blog->description = $request->description;
         $blog->author = $request->author;
-        $blog->image=$filename;
+        $blog->image = $filename;
 
         $blog->save();
         return back()->with('status', 'Blog Added Successfully');
@@ -73,24 +73,23 @@ class BlogController extends Controller
             ],
 
         );
-        if(File::exists("uploads/blog/".$blog->image))
-        {
-            File::delete("uploads/blog/".$blog->image);
+        if (File::exists("uploads/blog/" . $blog->image)) {
+            File::delete("uploads/blog/" . $blog->image);
         }
-        
+
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
             $filename = time() . '.' . $ext;
             $file->move('uploads/blog', $filename);
-            $file->image=$filename;
+            $file->image = $filename;
         }
-        
+
         $blog->title = $request->title;
         $blog->description = $request->description;
         $blog->author = $request->author;
-        $blog->image=$filename;
-        
+        $blog->image = $filename;
+
         $blog->update();
         return redirect('/blog')->with('update', 'Blog Updated Successfully');
     }
@@ -98,29 +97,38 @@ class BlogController extends Controller
 
     public function delete(Request $request)
     {
-        $blog= Blog::find($request->id)->delete();
-        if($blog)
-        {
+        $blog = Blog::find($request->id)->delete();
+        if ($blog) {
 
-            return response()->json(['status'=>'1','msg'=>'Blog Deleted Successfully']);
-        }
-        else
-        {
-            return response()->json(['status'=>'0','msg'=>'Something Went wrong']);
+            return response()->json(['status' => '1', 'msg' => 'Blog Deleted Successfully']);
+        } else {
+            return response()->json(['status' => '0', 'msg' => 'Something Went wrong']);
         }
     }
     public function blogStatus(Request $request)
     {
-        $blog= Blog::find($request->id);
-       $status= $blog->status= $request->status==1 ? '0':'1';
-        if($status)
-        {
+        $blog = Blog::find($request->id);
+        $status = $blog->status = $request->status == 1 ? '0' : '1';
+        if ($status) {
 
-            return response()->json(['status'=>'1','msg'=>'Blog Deleted Successfully']);
+            return response()->json(['status' => '1', 'msg' => 'Blog Deleted Successfully']);
+        } else {
+            return response()->json(['status' => '0', 'msg' => 'Something Went wrong']);
         }
-        else
+    }
+    public function status($id)
+    {
+        $blog= Blog::find($id)->first();
+
+        if($blog->status=='1')
         {
-            return response()->json(['status'=>'0','msg'=>'Something Went wrong']);
+            $blog->status='0';
         }
+        else{
+            $blog->status ='1';
+        }
+        $blog->update();
+        return back()->with('blogStatus','Blog Status Has been Updated Successfully ');
+
     }
 }

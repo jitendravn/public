@@ -24,4 +24,4 @@ Route::post('/add_blog',[BlogController::class,'store']);
 Route::get('edit/{id}',[BlogController::class,'edit']);
 Route::post('update/{id}',[BlogController::class,'update']);
 Route::post('delete',[BlogController::class,'delete'])->name('deleteBlog');
-Route::post('status',[BlogController::class,'status'])->name('blogStatus');
+Route::get('status/{id}',[BlogController::class,'status']);

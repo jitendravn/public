@@ -75,6 +75,11 @@
                         {{ session::get('update') }}
                     </div>
                 @endif
+                @if (Session::has('blogStatus'))
+                    <div class="alert alert-danger ">
+                        {{ session::get('blogStatus') }}
+                    </div>
+                @endif
                 <div class="card shadow">
                     <div class="card-header bg-danger text-white">Blog Details</div>
                     <div class="card-body">
@@ -97,7 +102,7 @@
                                         <td>{{ $item->title }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->author }}</td>
-                                        <td><button data-id="{{ $item->id,$item->status }}"  id="status" class="btn btn-{{$item->status==1 ?'danger': 'warning'}}">{{$item->status==1?'Active':'Inactive'}}</button></td>
+                                        <td><a href="{{url('status',$item->id)}}" class="btn btn-{{$item->status==1 ?'danger': 'warning'}}">{{$item->status==1?'Active':'Inactive'}}</button></td>
                                         <td><img src="{{ 'uploads/blog/' . $item->image }}" alt="{{ $item->title }}"
                                                 class="img-fluid"></td>
                                         <td><a href="{{ url('edit/' . $item->id) }}" class="btn btn-warning">Edit</a>
@@ -156,35 +161,9 @@
                     }
                 });
             }
-        });
+        
 
-        $(document).on('click','#status', function (e) {
-            e.preventDefault();
-
-            var id=$(this).data('id');
-           
-            alert(status);
-            $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: "post",
-                    url: "{{ route('blogStatus') }}",
-                    data:{id:id} ,
-                    dataType: "json",
-                    success: function(response) {
-                        if(response.status==1)
-                        {   
-                            swal(response.msg);
-                            window.location.reload();
-                        }
-                        else
-                        {
-                            swal(response.msg);
-                            window.location.reload();
-                        }
-                    }
-                });
+        
         });
     </script>
 </body>
