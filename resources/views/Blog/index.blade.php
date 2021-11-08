@@ -143,7 +143,7 @@
 
 
 
-           
+    
             var parent = $(this).parent();
             if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
@@ -151,7 +151,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "delete",
-                    url: "{{ url('delete') }}",
+                    url: "{{ url('delete') }}/"+id,
                     data: {
                         id: id
                     },
@@ -160,16 +160,13 @@
                         if (response.status == 1) {
 
                             swal('success', response.msg, '');
-                            console.warn('#row' + id);
-                            parent.slideUp(300, function() {
-                                parent.closest("#row" + id).remove();
-                            });
+                            console.warn('#row');
+                            $('#row'+id).remove();
 
 
                         } else {
                             swal('warning', response.msg, '');
-                            window.location.reload();
-                        }
+                            $('#row'+id).remove()                        }
                     }
                 });
             }
