@@ -51,7 +51,8 @@
                             </div>
                             <div class="form-group mb-2">
                                 <label for="">Blog Image</label>
-                                <input type="file" name="image" class="form-control">
+                                <input type="file" name="image" class="form-control" accept="image/*" />
+                               
                                 <span class="text-danger fw-bold">@error('image') ** {{ $message }}
                                     **@enderror</span>
                             </div>
@@ -96,6 +97,7 @@
                                         <td>{{ $item->title }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->author }}</td>
+                                        <td><button data-id="{{ $item->id,$item->status }}"  id="status" class="btn btn-{{$item->status==1 ?'danger': 'warning'}}">{{$item->status==1?'Active':'Inactive'}}</button></td>
                                         <td><img src="{{ 'uploads/blog/' . $item->image }}" alt="{{ $item->title }}"
                                                 class="img-fluid"></td>
                                         <td><a href="{{ url('edit/' . $item->id) }}" class="btn btn-warning">Edit</a>
@@ -149,10 +151,40 @@
                         else
                         {
                             swal(response.msg);
+                            window.location.reload();
                         }
                     }
                 });
             }
+        });
+
+        $(document).on('click','#status', function (e) {
+            e.preventDefault();
+
+            var id=$(this).data('id');
+           
+            alert(status);
+            $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "post",
+                    url: "{{ route('blogStatus') }}",
+                    data:{id:id} ,
+                    dataType: "json",
+                    success: function(response) {
+                        if(response.status==1)
+                        {   
+                            swal(response.msg);
+                            window.location.reload();
+                        }
+                        else
+                        {
+                            swal(response.msg);
+                            window.location.reload();
+                        }
+                    }
+                });
         });
     </script>
 </body>

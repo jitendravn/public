@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group mb-2">
                                 <label for="">Blog Image</label>
-                                <input type="file" name="image"  class="form-control"
+                                <input type="file" name="image" class="form-control" accept="image/*" />
                                    >
                                 <span class="text-danger fw-bold">@error('image') ** {{ $message }}
                                     **@enderror</span>
