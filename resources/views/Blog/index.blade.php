@@ -15,9 +15,9 @@
 <body>
     <div class="container">
         <div class="row mt-4">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 @if (Session::has('status'))
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger alert-dismissible fade show">
                         {{ session::get('status') }}
                     </div>
                 @endif
@@ -52,7 +52,7 @@
                             <div class="form-group mb-2">
                                 <label for="">Blog Image</label>
                                 <input type="file" name="image" class="form-control" accept="image/*" />
-                               
+
                                 <span class="text-danger fw-bold">@error('image') ** {{ $message }}
                                     **@enderror</span>
                             </div>
@@ -64,19 +64,19 @@
                     </form>
                 </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-8">
                 @if (Session::has('delete'))
-                    <div class="alert alert-danger delete">
+                    <div class="alert alert-danger alert-dismissible fade show delete">
                         {{ session::get('delete') }}
                     </div>
                 @endif
                 @if (Session::has('update'))
-                    <div class="alert alert-danger ">
+                    <div class="alert alert-danger alert-dismissible fade show ">
                         {{ session::get('update') }}
                     </div>
                 @endif
                 @if (Session::has('blogStatus'))
-                    <div class="alert alert-danger ">
+                    <div class="alert alert-danger alert-dismissible fade show ">
                         {{ session::get('blogStatus') }}
                     </div>
                 @endif
@@ -103,14 +103,16 @@
                                         <td>{{ $item->title }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->author }}</td>
-                                        <td><a href="{{url('status',$item->id)}}" class="btn btn-{{$item->status==1 ?'danger': 'warning'}}">{{$item->status==1?'Active':'Inactive'}}</button></td>
-                                        <td><img src="{{ 'uploads/blog/' . $item->image }}" alt="{{ $item->title }}"
-                                                class="img-fluid"></td>
+                                        <td><a href="{{ url('status', $item->id) }}"
+                                                class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</button>
+                                        </td>
+                                        <td><img src="{{ 'uploads/blog/' . $item->image }}"
+                                                alt="{{ $item->title }}" class="img-fluid"></td>
                                         <td><a href="{{ url('edit/' . $item->id) }}" class="btn btn-warning">Edit</a>
                                         </td>
                                         <td><button data-id="{{ $item->id }}" id="deleteBlog"
                                                 class="btn btn-danger">Delete</button>
-                                                @csrf
+                                            @csrf
                                         </td>
                                     </tr>
                                 @empty
@@ -138,7 +140,7 @@
         $(document).on('click', '#deleteBlog', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
-           
+            var parent = $(this).parent();
             if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
                     headers: {
@@ -146,27 +148,29 @@
                     },
                     type: "delete",
                     url: "{{ route('deleteBlog') }}",
-                    data:{id:id} ,
+                    data: {
+                        id: id
+                    },
                     dataType: "json",
                     success: function(response) {
-                        if(response.status==1)
-                        {   
-                            
-                            swal('success',response.msg,'');
-                            $(".delete" +id).html(response.msg);
-                           
-                        }
-                        else
-                        {
-                            swal('warning',response.msg,'' );
+                        if (response.status == 1) {
+
+                            swal('success', response.msg, '');
+                            parent.slideUp(300, function() {
+                                parent.closest("tr").remove();
+                            });
+
+
+                        } else {
+                            swal('warning', response.msg, '');
                             window.location.reload();
                         }
                     }
                 });
             }
-        
 
-        
+
+
         });
     </script>
 </body>
