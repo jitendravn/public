@@ -156,6 +156,7 @@
                         if (response.status == 1) {
 
                             swal('success', response.msg, '');
+                            console.warn('#tr'+id);
                             parent.slideUp(300, function() {
                                 parent.closest("#tr").remove();
                             });
