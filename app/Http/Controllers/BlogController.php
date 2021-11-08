@@ -98,7 +98,13 @@ class BlogController extends Controller
     public function delete($id)
     {
        
-        $blog = Blog::find($id)->delete();
+        $blog = Blog::find($id);
+        
+        if (File::exists("uploads/blog/" . $blog->image)) {
+            File::delete("uploads/blog/" . $blog->image);
+        }
+        
+        $blog->delete();
         if ($blog) {
 
             return response()->json(['status' => '1', 'msg' => 'Blog Deleted Successfully']);
