@@ -143,7 +143,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    type: "post",
+                    type: "delete",
                     url: "{{ route('deleteBlog') }}",
                     data:{id:id} ,
                     dataType: "json",
