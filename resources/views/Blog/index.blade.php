@@ -26,11 +26,12 @@
                     <div class="card-header bg-danger text-white">Add Blog</div>
 
                     <form action="{{ route('blog.store') }}" method="POST" enctype="multipart/form-data">
+                    
                         <div class="card-body ">
                             @csrf
                             <div class="form-group mb-2">
                                 <label for="">Title</label>
-                                <input type="text" name="title" value="{{ old('title') }}" class="form-control"
+                                <input type="text" name="title" value="{{ old('title') }} " class="form-control"
                                     placeholder="Enter Your Blog Name">
                                 <span class="text-danger fw-bold">@error('title')** {{ $message }}
                                     **@enderror</span>
@@ -118,7 +119,7 @@
                                         <td>{{ $item->title }}</td>
                                         <td>{{ $item->description }}</td>
                                         <td>{{ $item->author }}</td>
-                                        <td><a href="{{ route('blog.status', $item->id) }}"
+                                        <td><a href="{{ url('status', $item->id) }}"
                                                 class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</a>
                                         </td>
                                         <td><img src="{{ 'uploads/blog/' . $item->image  }}"

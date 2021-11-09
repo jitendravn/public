@@ -14,7 +14,7 @@ class BlogController extends Controller
     {
         $blog = Blog::all();
        
-        
+   
         return view('Blog.index', compact('blog'));
     }
 
@@ -44,6 +44,9 @@ class BlogController extends Controller
         $blog->image = $filename;
 
         $blog->save();
+         
+        
+        $editBlog =Blog::find();
         return back()->with('status', 'Blog Added Successfully');
     }
 
