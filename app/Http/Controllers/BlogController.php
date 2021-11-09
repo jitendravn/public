@@ -12,8 +12,12 @@ class BlogController extends Controller
 
     public function index(Request $request)
     {
-        $blog = Blog::all();
-        return view('Blog.index', compact('blog'));
+
+        $view_type='edit';
+        $view_type='add';
+        $blog = Blog::select('title','description','author','status','image')->get();
+
+        return view('Blog.index', compact('view_type','blog'));
     }
 
    
