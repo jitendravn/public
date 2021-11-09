@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use DataTables;
 
 class BlogController extends Controller
 {
@@ -13,16 +14,17 @@ class BlogController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $blog = Blog::all();
+        
         return view('Blog.index', compact('blog'));
     }
 
 
     public function store(Request $request)
     {
-       
+
         $blog = new Blog();
         $request->validate(
             [
@@ -47,7 +49,7 @@ class BlogController extends Controller
         $blog->title = $request->title;
         $blog->description = $request->description;
         $blog->author = $request->author;
-        $blog->status=$request->status=='1'?'1':'0';
+        $blog->status = $request->status == '1' ? '1' : '0';
         $blog->image = $filename;
 
         $blog->save();
@@ -90,7 +92,7 @@ class BlogController extends Controller
         $blog->title = $request->title;
         $blog->description = $request->description;
         $blog->author = $request->author;
-        $blog->status=$request->status=='1'?'1':'0';
+        $blog->status = $request->status == '1' ? '1' : '0';
 
         $blog->image = $filename;
 
@@ -101,13 +103,13 @@ class BlogController extends Controller
 
     public function delete($id)
     {
-       
+
         $blog = Blog::find($id);
-        
+
         if (File::exists("uploads/blog/" . $blog->image)) {
             File::delete("uploads/blog/" . $blog->image);
         }
-        
+
         $blog->delete();
         if ($blog) {
 
@@ -116,20 +118,17 @@ class BlogController extends Controller
             return response()->json(['status' => '0', 'msg' => 'Something Went wrong']);
         }
     }
-    
+
     public function status($id)
     {
-        $blog= Blog::find($id);
+        $blog = Blog::find($id);
 
-        if($blog->status=='1')
-        {
-            $blog->status='0';
-        }
-        else{
-            $blog->status ='1';
+        if ($blog->status == '1') {
+            $blog->status = '0';
+        } else {
+            $blog->status = '1';
         }
         $blog->update();
-        return back()->with('blogStatus','Blog Status Has been Updated Successfully ');
-
+        return back()->with('blogStatus', 'Blog Status Has been Updated Successfully ');
     }
 }

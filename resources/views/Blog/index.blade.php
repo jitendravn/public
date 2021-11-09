@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{asset('assets/datatables/datatables.min.css')}}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 
     <title>Blog </title>
@@ -97,7 +98,7 @@
                 <div class="card shadow">
                     <div class="card-header bg-danger text-white">Blog Details</div>
                     <div class="card-body">
-                        <table class="table table-bordered table-striped">
+                        <table class="table table-bordered table-striped table-responsive">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -148,6 +149,7 @@
 
 
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    <script src="{{ asset('assets/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- ajax delete request --}}
