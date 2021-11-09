@@ -15,7 +15,7 @@ class BlogController extends Controller
 
         $view_type='edit';
         $view_type='add';
-       $view_type='listing';
+    //    $view_type='listing'; 
         $blog = Blog::all();
 
         return view('Blog.index', compact('view_type','blog'));
