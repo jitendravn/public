@@ -172,9 +172,10 @@
                                             <td><a href="{{ route('blog.edit', $item->id) }}"
                                                     class="btn btn-warning">Edit</a>
                                             </td>
-                                            <td><button data-id="{{ $item->id }}" value="{{ $item->id }}"
-                                                    onclick="deleteBlog({{ $item->id }})"
-                                                    class="btn btn-danger">Delete</button>
+                                            
+                                            <td><a href="{{route('blog.destroy', $item->id) }}" value="{{ $item->id }}"
+                                                    
+                                                    class="btn btn-danger">Delete</a>
                                                 @csrf
                                             </td>
                                         </tr>
@@ -211,15 +212,16 @@
 
 
 
-
+        alert(id);
             var parent = $(this).parent();
             if (confirm('Are You sure you want to delete this blog')) {
+                var id= $(this).data('id');
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "delete",
-                    url: "{{ route('blog.destroy', $item->id) }}",
+                    url: "{{ route('blog.destroy',$id) }}",
                     data: {
                         id: id
                     },
