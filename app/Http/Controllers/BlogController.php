@@ -9,19 +9,15 @@ use DataTables;
 
 class BlogController extends Controller
 {
-    
+
     public function index(Request $request)
     {
         $blog = Blog::all();
-       
-   
         return view('Blog.index', compact('blog'));
     }
 
-
     public function store(Request $request)
     {
-
         $blog = new Blog();
         $request->validate(
             [
@@ -29,7 +25,8 @@ class BlogController extends Controller
                 'description' => 'required',
                 'author' => 'required',
                 'image' => 'required|mimes:png,jpg,jpeg',
-            ]);
+            ]
+        );
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
@@ -44,20 +41,16 @@ class BlogController extends Controller
         $blog->image = $filename;
 
         $blog->save();
-         
-        
-        $editBlog =Blog::find();
+
+        $editBlog = Blog::find();
         return back()->with('status', 'Blog Added Successfully');
     }
-
-
 
     public function edit($id)
     {
         $blog = Blog::find($id);
         return view('Blog.edit', compact('blog'));
     }
-
 
     public function update(Request $request, $id)
     {
@@ -68,8 +61,7 @@ class BlogController extends Controller
                 'description' => 'required',
                 'author' => 'required',
                 'image' => 'required|mimes:png,jpg,jpeg',
-            ],
-
+            ]
         );
         if (File::exists("uploads/blog/" . $blog->image)) {
             File::delete("uploads/blog/" . $blog->image);
@@ -94,10 +86,8 @@ class BlogController extends Controller
         return redirect('/blog')->with('update', 'Blog Updated Successfully');
     }
 
-
     public function destroy($id)
     {
-
         $blog = Blog::find($id);
 
         if (File::exists("uploads/blog/" . $blog->image)) {

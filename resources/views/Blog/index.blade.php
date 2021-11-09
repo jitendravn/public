@@ -26,7 +26,7 @@
                     <div class="card-header bg-danger text-white">Add Blog</div>
 
                     <form action="{{ route('blog.store') }}" method="POST" enctype="multipart/form-data">
-                    
+                        
                         <div class="card-body ">
                             @csrf
                             <div class="form-group mb-2">
