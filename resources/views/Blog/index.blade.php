@@ -123,7 +123,7 @@
                                         </td>
                                         <td><img src="{{ 'uploads/blog/' . $item->image  }}"
                                                 alt="{{ $item->title }}" class="img-fluid w-50"></td>
-                                        <td><a href="{{ route('edit/' . $item->id) }}" class="btn btn-warning">Edit</a>
+                                        <td><a href="{{ url('blog.edit/' . $item->id) }}" class="btn btn-warning">Edit</a>
                                         </td>
                                         <td><button data-id="{{ $item->id }}" value="{{ $item->id }}"
                                                 onclick="deleteBlog({{ $item->id }})"
@@ -170,7 +170,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "delete",
-                    url: "{{ url('delete') }}/" + id,
+                    url: "{{ route('blog.destroy',$item->id) }}" ,
                     data: {
                         id: id
                     },
