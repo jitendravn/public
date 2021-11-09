@@ -13,15 +13,18 @@ class BlogController extends Controller
     public function index(Request $request)
     {
         $blog = Blog::all();
-       
-   
-        return view('Blog.index', compact('blog'));
+        $view_type = 'listing';
+        return view('Blog.index', compact(['blog','view_type']));
     }
 
+    public function create(){
+        $view_type = 'add';
+        return view('Blog.index', compact(['view_type']));
+    }
 
     public function store(Request $request)
     {
-
+        $view_type = 'listing';
         $blog = new Blog();
         $request->validate(
             [
@@ -53,9 +56,10 @@ class BlogController extends Controller
 
 
     public function edit($id)
-    {
+    {   
+        $view_type = 'edit';
         $blog = Blog::find($id);
-        return view('Blog.edit', compact('blog'));
+        return view('Blog.index', compact(['blog','view_type']));
     }
 
 
