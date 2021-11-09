@@ -19,9 +19,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/blog',[BlogController::class,'index']);
-Route::post('/add_blog',[BlogController::class,'store']);
-Route::get('edit/{id}',[BlogController::class,'edit']);
-Route::post('update/{id}',[BlogController::class,'update']);
-Route::delete('delete/{id}',[BlogController::class,'delete']);
-Route::get('status/{id}',[BlogController::class,'status']);
+Route::resource('blog',BlogController::class);
