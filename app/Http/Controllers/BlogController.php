@@ -16,8 +16,17 @@ class BlogController extends Controller
         return view('Blog.index', compact('blog'));
     }
 
+   
+
+    public function create(){
+        $view_type = 'add';
+        return view('Blog.index', compact(['view_type']));
+    }
+
     public function store(Request $request)
     {
+        $view_type = 'listing';
+
         $blog = new Blog();
         $request->validate(
             [
@@ -42,14 +51,16 @@ class BlogController extends Controller
 
         $blog->save();
 
-        $editBlog = Blog::find();
-        return back()->with('status', 'Blog Added Successfully');
+        $view_type = 'listing';
+      
+        return back()->with('status', 'Blog Added Successfully',compact('blog','view_type'));
     }
 
     public function edit($id)
-    {
+    {   
+        $view_type = 'edit';
         $blog = Blog::find($id);
-        return view('Blog.edit', compact('blog'));
+        return view('Blog.index', compact(['blog','view_type']));
     }
 
     public function update(Request $request, $id)

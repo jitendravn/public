@@ -16,12 +16,14 @@
 <body>
     <div class="container">
         <div class="row mt-4">
-            <div class="col-md-4">
+            @if($view_type == 'add' || $view_type == 'edit')
+            <div class="col-md-12">
                 @if (Session::has('status'))
                     <div class="alert alert-danger alert-dismissible fade show">
                         {{ session::get('status') }}
                     </div>
                 @endif
+               
                 <div class="card shadow">
                     <div class="card-header bg-danger text-white">Add Blog</div>
 
@@ -80,7 +82,8 @@
                     </form>
                 </div>
             </div>
-            <div class="col-md-8">
+            @else 
+            <div class="col-md-12">
                 @if (Session::has('delete'))
                     <div class="alert alert-danger alert-dismissible fade show delete">
                         {{ session::get('delete') }}
@@ -145,6 +148,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 
@@ -156,14 +160,8 @@
     <script src="{{ asset('assets/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    {{-- ajax delete request --}}
     <script>
         function deleteBlog(id) {
-
-
-
-
-
             var parent = $(this).parent();
             if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
@@ -180,10 +178,7 @@
                         if (response.status == 1) {
 
                             swal('success', response.msg, '');
-                            console.warn('#row');
                             $('#row' + id).remove();
-
-
                         } else {
                             swal('warning', response.msg, '');
                             $('#row' + id).remove()
