@@ -9,11 +9,7 @@ use DataTables;
 
 class BlogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index(Request $request)
     {
         $blog = Blog::all();
@@ -33,13 +29,7 @@ class BlogController extends Controller
                 'description' => 'required',
                 'author' => 'required',
                 'image' => 'required|mimes:png,jpg,jpeg',
-            ],
-            [
-                'title.required' => 'Title Must Not Be Empty',
-                'description.required' => 'Description Must Not Be Empty',
-                'author.required' => 'Author Must Not Be Empty',
-            ],
-        );
+            ]);
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();

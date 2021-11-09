@@ -98,7 +98,7 @@
                 <div class="card shadow">
                     <div class="card-header bg-danger text-white">Blog Details</div>
                     <div class="card-body">
-                        <table class="table table-bordered table-striped table-responsive">
+                        <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -122,7 +122,7 @@
                                                 class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</a>
                                         </td>
                                         <td><img src="{{ 'uploads/blog/' . $item->image  }}"
-                                                alt="{{ $item->title }}" class="img-fluid"></td>
+                                                alt="{{ $item->title }}" class="img-fluid w-50"></td>
                                         <td><a href="{{ url('edit/' . $item->id) }}" class="btn btn-warning">Edit</a>
                                         </td>
                                         <td><button data-id="{{ $item->id }}" value="{{ $item->id }}"
