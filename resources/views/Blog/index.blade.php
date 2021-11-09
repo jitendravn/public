@@ -121,7 +121,7 @@
                                         <td><a href="{{ url('status', $item->id) }}"
                                                 class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</a>
                                         </td>
-                                        <td><img src="{{ 'uploads/blog/' . $item->image }}"
+                                        <td><img src="{{ 'uploads/blog/' . $item->image ? 'uploads/blog/'.$item->image:''.$item->image }}"
                                                 alt="{{ $item->title }}" class="img-fluid"></td>
                                         <td><a href="{{ url('edit/' . $item->id) }}" class="btn btn-warning">Edit</a>
                                         </td>
@@ -131,12 +131,15 @@
                                             @csrf
                                         </td>
                                     </tr>
+
                                 @empty
                                     <tr>
                                         <th class=" text-center" colspan="5">Blog Data Not Found</th>
                                     </tr>
                                 @endforelse
+                            
                             </tbody>
+                           
                         </table>
                     </div>
                 </div>
