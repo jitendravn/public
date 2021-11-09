@@ -15,7 +15,8 @@ class BlogController extends Controller
 
         $view_type='edit';
         $view_type='add';
-        $blog = Blog::select('title','description','author','status','image')->get();
+       $view_type='listing';
+        $blog = Blog::all();
 
         return view('Blog.index', compact('view_type','blog'));
     }
@@ -24,7 +25,8 @@ class BlogController extends Controller
 
     public function create(){
         $view_type = 'add';
-        return view('Blog.index', compact(['view_type']));
+        $blog=Blog::all();
+        return view('Blog.index', compact(['blog','view_type']));
     }
 
     public function store(Request $request)
@@ -63,7 +65,7 @@ class BlogController extends Controller
     public function edit($id)
     {   
         $view_type = 'edit';
-        $blog = Blog::find($id);
+         $blog = Blog::find($id);
         return view('Blog.index', compact(['blog','view_type']));
     }
 
