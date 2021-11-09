@@ -26,7 +26,7 @@
                 <div class="card shadow">
                     <div class="card-header bg-primary text-white">Add Blog</div>
 
-                    <form action="{{ route('update/'.$blog->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('blog.update',$blog->id) }}" method="POST" enctype="multipart/form-data">
                         <div class="card-body ">
                             @csrf
                             <div class="form-group mb-2">
