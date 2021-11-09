@@ -45,7 +45,7 @@
                                          @if ($view_type=='edit'
                                         ){{ $blog->title }}
 
-                                    @endif" class="form-control"
+                                    @endif" class="form-control "
                                     placeholder="Enter Your Blog Name">
                                     <span class="text-danger fw-bold">@error('title')** {{ $message }}
                                         **@enderror</span>
@@ -99,7 +99,12 @@
 
                             </div>
                             <div class="card-footer">
+                                @if ($view_type=='edit')
+                                    
+                                <button class="btn btn-danger form-control">Update</button>
+                                @else
                                 <button class="btn btn-danger form-control">Save</button>
+                                @endif
                             </div>
                         </form>
 
