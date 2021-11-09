@@ -76,6 +76,7 @@ class BlogController extends Controller
 
     public function update(Request $request, $id)
     {
+        
         $blog = Blog::find($id);
         $request->validate(
             [
@@ -105,7 +106,7 @@ class BlogController extends Controller
         $blog->image = $filename;
 
         $blog->update();
-        return redirect('/blog')->with('update', 'Blog Updated Successfully');
+        return redirect('blog')->with('update', 'Blog Updated Successfully');
     }
 
     public function destroy($id)

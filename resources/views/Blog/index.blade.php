@@ -16,19 +16,19 @@
 <body>
     <div class="container">
         <div class="row mt-4">
-            @if ($view_type=='add' || $view_type =='edit')
-            <div class="row mb-2">
-                <div class="col-md-3 ">
-                <a href="{{route('blog.index')}}" class="btn btn-danger" >Go to Listing</a>
-            </div>
-            </div>
+            @if ($view_type == 'add' || $view_type == 'edit')
+                <div class="row mb-2">
+                    <div class="col-md-3 ">
+                        <a href="{{ route('blog.index') }}" class="btn btn-danger">Go to Listing</a>
+                    </div>
+                </div>
             @else
-            <div class="row mb-2">
-                <div class="col-md-3 ">
-                    <a href="{{route('blog.create')}}" class="btn btn-danger">Add</a>
-                
-            </div>
-            </div>
+                <div class="row mb-2">
+                    <div class="col-md-3 ">
+                        <a href="{{ route('blog.create') }}" class="btn btn-danger">Add</a>
+
+                    </div>
+                </div>
             @endif
             @if ($view_type == 'add' || $view_type == 'edit')
                 <div class="col-md-12">
@@ -42,7 +42,8 @@
 
                         <form
                             action="{{ $view_type == 'edit' ? route('blog.update', $blog->id) : route('blog.store') }}"
-                            method="POST" enctype="multipart/form-data">
+                            method='POST' enctype="multipart/form-data">
+                            @method( ($view_type == 'edit' ? 'PUT' : 'POST') )
 
                             <div class="card-body ">
                                 @csrf
@@ -51,7 +52,7 @@
                                 <div class="form-group mb-2">
                                     <label for="">Title</label>
                                     <input type="text" name="title" value="{{ old('title') }} 
-                                         @if ($view_type=='edit'
+                                          @if ($view_type=='edit'
                                         ){{ $blog->title }}
 
                                     @endif" class="form-control "
@@ -73,7 +74,7 @@
                                 <div class="form-group mb-2">
                                     <label for="">Author</label>
                                     <input type="text" name="author" value="{{ old('author') }} 
-                                         @if ($view_type=='edit'
+                                          @if ($view_type=='edit'
                                         ){{ $blog->author }}
 
                                     @endif" class="form-control"
@@ -98,7 +99,7 @@
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="">Blog Image</label>
-                                    <input type="file" name="image" value="  @if ($view_type=='edit' ){{ $blog->author }}
+                                    <input type="file" name="image" value="   @if ($view_type=='edit' ){{ $blog->author }}
 
                                     @endif" class="form-control" accept="image/*" />
 
@@ -108,11 +109,11 @@
 
                             </div>
                             <div class="card-footer">
-                                @if ($view_type=='edit')
-                                    
-                                <button class="btn btn-danger form-control">Update</button>
+                                @if ($view_type == 'edit')
+
+                                    <button class="btn btn-danger form-control">Update</button>
                                 @else
-                                <button class="btn btn-danger form-control">Save</button>
+                                    <button class="btn btn-danger form-control">Save</button>
                                 @endif
                             </div>
                         </form>
@@ -120,7 +121,7 @@
                     </div>
                 </div>
             @else
-           
+
                 <div class="col-md-12 " id="table">
                     @if (Session::has('delete'))
                         <div class="alert alert-danger alert-dismissible fade show delete">
