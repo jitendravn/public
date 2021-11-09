@@ -16,8 +16,10 @@
 <body>
     <div class="container">
         <div class="row mt-4">
-            @if ($view_type=='listing')
-                
+            @if ($view_type=='add' || $view_type =='edit')
+            <a href="{{route('blog.index')}}">Listing</a>
+            @else
+            <a href="{{route('blog.create')}}">Add</a>
             @endif
             @if ($view_type == 'add' || $view_type == 'edit')
                 <div class="col-md-12">
@@ -105,7 +107,7 @@
                 </div>
             @else
            
-                <div class="col-md-12">
+                <div class="col-md-12 " id="table">
                     @if (Session::has('delete'))
                         <div class="alert alert-danger alert-dismissible fade show delete">
                             {{ session::get('delete') }}

@@ -15,13 +15,18 @@ class BlogController extends Controller
 
         $view_type='edit';
         $view_type='add';
-    //    $view_type='listing'; 
+       $view_type='listing'; 
         $blog = Blog::all();
 
         return view('Blog.index', compact('view_type','blog'));
     }
 
-   
+    public function show()
+   {
+      $view_type='listing';
+      $blog = Blog::all();
+      return view('Blog.index',compact('blog','view_type'));
+   }
 
     public function create(){
         $view_type = 'add';
