@@ -17,9 +17,18 @@
     <div class="container">
         <div class="row mt-4">
             @if ($view_type=='add' || $view_type =='edit')
-            <a href="{{route('blog.index')}}">Listing</a>
+            <div class="row mb-2">
+                <div class="col-md-3 ">
+                <a href="{{route('blog.index')}}" class="btn btn-danger" >Go to Listing</a>
+            </div>
+            </div>
             @else
-            <a href="{{route('blog.create')}}">Add</a>
+            <div class="row mb-2">
+                <div class="col-md-3 ">
+                    <a href="{{route('blog.create')}}" class="btn btn-danger">Add</a>
+                
+            </div>
+            </div>
             @endif
             @if ($view_type == 'add' || $view_type == 'edit')
                 <div class="col-md-12">
