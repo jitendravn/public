@@ -175,9 +175,7 @@
                                                     class="btn btn-warning">Edit</a>
                                             </td>
 
-                                            <td><button
-                                                    onclick="deleteBlog(this,'{{ route('blog.destroy', $item->id) }}')"
-                                                    class="btn btn-danger">Delete</button>
+                                            <td><button onclick="deleteBlog(this,'{{ route('blog.destroy', $item->id) }}')" class="btn btn-danger">Delete</button>
 
                                             </td>
                                         </tr>
@@ -211,15 +209,7 @@
 
     <script>
         function deleteBlog(obj, blog_url) {
-
-
-
-       
-
-            // var parent = $(this).parent();
-
             if (confirm('Are You sure you want to delete this blog')) {
-
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -228,16 +218,13 @@
                     url: blog_url,
                     dataType: "json",
                     success: function(response) {
+                        var parent = $(obj).parent();
                         if (response.status == 1) {
-
                             swal('', response.msg, 'success');
-                            console.warn('#row'+id);
-                            $('#row' + id).remove();
-
-
+                            parent.closest('tr').remove();
                         } else {
                             swal('', response.msg, 'error');
-                            $('#row' + id).remove()
+                           
                         }
                     }
                 });
