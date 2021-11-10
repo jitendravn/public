@@ -81,15 +81,11 @@
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         Active
                                     </label>
-                                    <input class="form-check-input" type="radio" name="status" value="0" @if ($view_type == 'edit')
-                                    {{ $blog->status == 0 ? 'checked' : '' }}
-                                    @endif
-                                    id="flexRadioDefault2" >
+                                    <input class="form-check-input" type="radio" name="status" value="{{ (isset($blog->status) && $blog->status!='' ? $blog->status : old('status'))  }}"               id="flexRadioDefault2" >
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         Inactive
                                     </label>
-                                    <span class="text-danger fw-bold">@error('status') ** {{ $message }}
-                                        **@enderror</span>
+                                   
 
                                   </div>
         <div class="form-group mb-2">

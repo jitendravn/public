@@ -61,18 +61,19 @@ class BlogController extends Controller
         return back()->with('status', 'Blog added successfully',compact('blog'));
     }
 
-    public function edit($id)
+    public function edit(BlogRequest $request,$id)
     {   
         $view_type = 'edit';
          $blog = Blog::find($id);
+        
         return view('Blog.index', compact(['blog','view_type']));
     }
 
     public function update(BlogRequest $request, $id)
     {
         
-        $blog = Blog::find($id);
         $request->validate();
+        $blog = Blog::find($id);
         if (File::exists("uploads/blog/" . $blog->image)) {
             File::delete("uploads/blog/" . $blog->image);
         }
