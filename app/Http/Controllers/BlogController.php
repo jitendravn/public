@@ -13,8 +13,7 @@ class BlogController extends Controller
     public function index(Request $request)
     {
 
-        $view_type='edit';
-        $view_type='add';
+       
        $view_type='listing'; 
         $blog = Blog::all();
 
@@ -36,8 +35,7 @@ class BlogController extends Controller
 
     public function store(Request $request)
     {
-        $view_type = 'listing';
-
+       
         $blog = new Blog();
         $request->validate(
             [
@@ -62,9 +60,9 @@ class BlogController extends Controller
 
         $blog->save();
 
-        $view_type = 'listing';
+        
       
-        return back()->with('status', 'Blog Added Successfully',compact('blog','view_type'));
+        return back()->with('status', 'Blog added successfully',compact('blog'));
     }
 
     public function edit($id)
@@ -106,11 +104,11 @@ class BlogController extends Controller
         $blog->image = $filename;
 
         $blog->update();
-        return redirect('blog')->with('update', 'Blog Updated Successfully');
+        return redirect('blog')->with('update', 'Blog updated successfully');
     }
 
     public function destroy($id)
-    { return $id;
+    { 
         $blog = Blog::find($id);
 
         if (File::exists("uploads/blog/" . $blog->image)) {
@@ -118,9 +116,16 @@ class BlogController extends Controller
         }
 
         $blog->delete();
-       
+       if($blog)
+       {
+        return response()->json(['status'=>1 , 'msg' => 'Blog deleted successfully']);
 
-            return back()->with(['status' => 'Blog Deleted Successfully']);
+       }
+       else
+       {
+        return response()->json(['status'=>1 , 'msg' => 'Blog deleted successfully']);
+
+       }
        
     }
 

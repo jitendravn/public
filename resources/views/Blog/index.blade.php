@@ -139,9 +139,7 @@
                         </div>
                     @endif
 
-                        @if (session::has('status'))
-                            <div class="alert alert-danger">{{session::get('status')}}</div>
-                        @endif
+                        
                     <div class="card shadow">
                         <div class="card-header bg-danger text-white">Blog Details</div>
                         <div class="card-body">
@@ -175,10 +173,8 @@
                                                     class="btn btn-warning">Edit</a>
                                             </td>
                                             
-                                            <td><a href="{{route('blog.destroy', $item->id) }}" 
-                                                    
-                                                    class="btn btn-danger">Delete</a>
-                                                @csrf
+                                            <td><button onclick="deleteBlog(this,'{{route('blog.destroy', $item->id) }}')" class="btn btn-danger">Delete</button>
+                                             
                                             </td>
                                         </tr>
 
@@ -208,13 +204,13 @@
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- ajax delete request --}}
-    {{-- <script>
-        function deleteBlog(id) {
+    <script>
+        function deleteBlog(obj,blog_url) {
 
+            
 
-
-
-        
+            var url=blog_url;
+      
             var parent = $(this).parent();
             if (confirm('Are You sure you want to delete this blog')) {
                 var id= $(this).data('id');
@@ -223,7 +219,7 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "delete",
-                    url: "{{ route('blog.destroy',$id) }}",
+                    url:url,
                     data: {
                         id: id
                     },
@@ -244,7 +240,7 @@
                 });
             }
         }
-    </script> --}}
+    </script>
 
 </body>
 
