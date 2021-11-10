@@ -72,30 +72,31 @@
                                     <span class="text-danger fw-bold">@error('author') ** {{ $message }}
                                         **@enderror</span>
                                 </div>
+
                                 <div class="form-group mb-2 mt-2">
                                     <label for="">Blog Status : </label>
 
-                                    <input class="form-check-input" type="radio" name="status" value="1" @if ($view_type == 'edit')
-                                    {{ $blog->status == 1 ? 'checked' : '' }}
-                            @endif
-                            id="flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Active
-                            </label>
-                            <input class="form-check-input" type="radio" name="status" value="0" @if ($view_type == 'edit')
-                            {{ $blog->status == 0 ? 'checked' : '' }}
-                            @endif
-                            id="flexRadioDefault2" >
-                            <label class="form-check-label" for="flexRadioDefault2">
-                                Inactive
-                            </label>
+                                    <input class="form-check-input" type="radio" name="status" value="{{ (isset($blog->status) && $blog->status!='' ? $blog->status : old('status'))  }}"
+                                    id="flexRadioDefault1">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        Active
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="status" value="0" @if ($view_type == 'edit')
+                                    {{ $blog->status == 0 ? 'checked' : '' }}
+                                    @endif
+                                    id="flexRadioDefault2" >
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        Inactive
+                                    </label>
+                                    <span class="text-danger fw-bold">@error('status') ** {{ $message }}
+                                        **@enderror</span>
 
-        </div>
+                                  </div>
         <div class="form-group mb-2">
             <label for="">Blog Image</label>
             <input type="file" name="image" value="   {{ (isset($blog->image) && $blog->image!='' ? $blog->image : old('image'))  }}" class="form-control" accept="image/*" />
 
-            <span class="text-danger fw-bold">@error('image') ** {{ $message }}
+            <span class="text-danger fw-bold" >@error('image') ** {{ $message }}
                 **@enderror</span>
         </div>
 
@@ -200,7 +201,7 @@
 <script src="{{asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- ajax delete request --}}
-{{JsValidator::formRequest('App\Http\Requests\BlogRequest')}}
+ {!!JsValidator::formRequest('App\Http\Requests\BlogRequest')!!}
     <script>
         function deleteBlog(obj, blog_url) {
 
