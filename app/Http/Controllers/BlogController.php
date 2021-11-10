@@ -110,7 +110,7 @@ class BlogController extends Controller
     }
 
     public function destroy($id)
-    {
+    { return $id;
         $blog = Blog::find($id);
 
         if (File::exists("uploads/blog/" . $blog->image)) {
@@ -118,12 +118,10 @@ class BlogController extends Controller
         }
 
         $blog->delete();
-        if ($blog) {
+       
 
             return back()->with(['status' => 'Blog Deleted Successfully']);
-        } else { 
-            return back()->with(['status' => 'Something Went wrong']);
-        }
+       
     }
 
     public function status($id)

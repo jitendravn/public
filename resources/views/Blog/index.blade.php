@@ -175,7 +175,7 @@
                                                     class="btn btn-warning">Edit</a>
                                             </td>
                                             
-                                            <td><a href="{{route('blog.destroy', $item->id) }}" value="{{ $item->id }}"
+                                            <td><a href="{{route('blog.destroy', $item->id) }}" 
                                                     
                                                     class="btn btn-danger">Delete</a>
                                                 @csrf
