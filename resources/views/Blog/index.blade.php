@@ -139,7 +139,9 @@
                         </div>
                     @endif
 
-
+                        @if (session::has('msg'))
+                            <div class="alert alert-danger">{{session::get('msg')}}</div>
+                        @endif
                     <div class="card shadow">
                         <div class="card-header bg-danger text-white">Blog Details</div>
                         <div class="card-body">
@@ -212,7 +214,7 @@
 
 
 
-        alert(id);
+        
             var parent = $(this).parent();
             if (confirm('Are You sure you want to delete this blog')) {
                 var id= $(this).data('id');

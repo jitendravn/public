@@ -120,9 +120,9 @@ class BlogController extends Controller
         $blog->delete();
         if ($blog) {
 
-            return response()->json(['status' => '1', 'msg' => 'Blog Deleted Successfully']);
+            return back()->with(['msg' => 'Blog Deleted Successfully']);
         } else {
-            return response()->json(['status' => '0', 'msg' => 'Something Went wrong']);
+            return back()->with(['msg' => 'Something Went wrong']);
         }
     }
 
