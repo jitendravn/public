@@ -168,6 +168,7 @@
                                             <td><a href="{{ url('status', $item->id) }}"
                                                     class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</a>
                                             </td>
+                                           
                                             <td><img src="{{ 'uploads/blog/' . $item->image }}"
                                                     alt="{{ $item->title }}" class="img-fluid w-50 img-thumbnail">
                                             </td>
@@ -209,6 +210,8 @@
 
     <script>
         function deleteBlog(obj, blog_url) {
+            
+
             if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
                     headers: {
