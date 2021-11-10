@@ -17,16 +17,7 @@ class BlogController extends Controller
 
         $view_type = 'listing';
         $blog = Blog::all();
-        if ($request->ajax()) {
-          return  DataTables::of($blog)->addIndexColumn()
-          ->addColumn('Actions', function($blog) {
-            return '<button type="button"  class="btn btn-success btn-sm" id="blogEdit" data-id="'.$blog->id.'">Edit</button>
-                <button type="button" data-id="'.$blog->id.'" onclick="deleteBlog()"  class="btn btn-danger btn-sm" id="deleteBlog">Delete</button>';
-        })
-        ->rawColumns(['Actions'])
-        ->make(true);
-           
-        }
+    
         return view('Blog.index', compact('view_type', 'blog'));
     }
 
@@ -71,7 +62,7 @@ class BlogController extends Controller
         return back()->with('status', 'Blog added successfully', compact('blog'));
     }
 
-    public function edit(BlogRequest $request, $id)
+    public function edit($id)
     {
         $view_type = 'edit';
         $blog = Blog::find($id);

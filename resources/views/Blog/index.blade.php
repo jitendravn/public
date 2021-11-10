@@ -147,7 +147,7 @@
 
                     <tbody>
 
-                        {{-- @forelse ($blog as $item)
+                        @forelse ($blog as $item)
                             <tr id='row{{ $item->id }}'>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->title }}</td>
@@ -174,7 +174,7 @@
                             <tr>
                                 <th class=" text-center" colspan="5">Blog Data Not Found</th>
                             </tr>
-                        @endforelse --}}
+                        @endforelse 
 
                     </tbody>
 
@@ -215,7 +215,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    type: "post",
+                    type: "delete",
                     url: blog_url,
                     dataType: "json",
                     success: function(response) {
@@ -231,9 +231,9 @@
             }
         }
     </script>
-<script>
+{{-- <script>
     
-    var dataTable = $('#data-table').DataTable({
+    var table = $('#data-table').DataTable({
             processing: true,
             serverSide: true,
             autoWidth: false,
@@ -252,10 +252,10 @@
                 render: function( data, type, full, meta ) {
             return "<img src=\"uploads/blog/" + data + "\" height=\"50\"/>";
         } },
-                {data: 'Actions', name: 'Actions',orderable:false,searchable:false,sClass:'text-center'},
+                {data: 'actions', name: 'actions',orderable:false,searchable:false,sClass:'text-center'},
             ]
         });
-</script>
+</script> --}}
 </body>
 
 </html>
