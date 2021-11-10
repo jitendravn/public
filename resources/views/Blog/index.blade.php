@@ -132,7 +132,7 @@
         <div class="card shadow">
             <div class="card-header bg-danger text-white">Blog Details</div>
             <div class="card-body">
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped" id="data-table">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -147,7 +147,7 @@
 
                     <tbody>
 
-                        @forelse ($blog as $item)
+                        {{-- @forelse ($blog as $item)
                             <tr id='row{{ $item->id }}'>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->title }}</td>
@@ -174,7 +174,7 @@
                             <tr>
                                 <th class=" text-center" colspan="5">Blog Data Not Found</th>
                             </tr>
-                        @endforelse
+                        @endforelse --}}
 
                     </tbody>
 
@@ -222,7 +222,25 @@
             }
         }
     </script>
-
+<script>
+    
+    var dataTable = $('#data-table').DataTable({
+            processing: true,
+            serverSide: true,
+            autoWidth: false,
+            
+            ajax: '{{ route('blog.index') }}',
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'title', name: 'title'},
+                {data: 'description', name: 'description'},
+                {data: 'author', name: 'author'},
+                {data: 'status', name: 'status' },
+                {data: 'image', name: 'image' },
+                {data: 'Actions', name: 'Actions',orderable:false,serachable:false,sClass:'text-center'},
+            ]
+        });
+</script>
 </body>
 
 </html>

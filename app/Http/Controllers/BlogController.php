@@ -14,33 +14,43 @@ class BlogController extends Controller
     public function index(Request $request)
     {
 
-       
-        $view_type='listing'; 
-        $blog = Blog::all();
 
-        return view('Blog.index', compact('view_type','blog'));
+        $view_type = 'listing';
+        $blog = Blog::all();
+        if ($request->ajax()) {
+          return  DataTables::of($blog)->addIndexColumn()
+          ->addColumn('Actions', function($blog) {
+            return '<button type="button" class="btn btn-success btn-sm" id="getEditArticleData" data-id="'.$blog->id.'">Edit</button>
+                <button type="button" data-id="'.$blog->id.'" data-toggle="modal" data-target="#DeleteArticleModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
+        })
+        ->rawColumns(['Actions'])
+        ->make(true);
+           
+        }
+        return view('Blog.index', compact('view_type', 'blog'));
     }
 
     public function show()
-   {
-      $view_type='listing';
-      $blog = Blog::all();
-      return view('Blog.index',compact('blog','view_type'));
-   }
+    {
+        $view_type = 'listing';
+        $blog = Blog::all();
+        return view('Blog.index', compact('blog', 'view_type'));
+    }
 
-    public function create(){
+    public function create()
+    {
         $view_type = 'add';
-        $blog=Blog::all();
-        return view('Blog.index', compact(['blog','view_type']));
+        $blog = Blog::all();
+        return view('Blog.index', compact(['blog', 'view_type']));
     }
 
     public function store(BlogRequest $request)
     {
-       
+
         $blog = new Blog();
         $request->validate();
-       
-       
+
+
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
@@ -56,22 +66,22 @@ class BlogController extends Controller
 
         $blog->save();
 
-        
-      
-        return back()->with('status', 'Blog added successfully',compact('blog'));
+
+
+        return back()->with('status', 'Blog added successfully', compact('blog'));
     }
 
-    public function edit(BlogRequest $request,$id)
-    {   
+    public function edit(BlogRequest $request, $id)
+    {
         $view_type = 'edit';
-         $blog = Blog::find($id);
-        
-        return view('Blog.index', compact(['blog','view_type']));
+        $blog = Blog::find($id);
+
+        return view('Blog.index', compact(['blog', 'view_type']));
     }
 
     public function update(BlogRequest $request, $id)
     {
-        
+
         $request->validate();
         $blog = Blog::find($id);
         if (File::exists("uploads/blog/" . $blog->image)) {
@@ -98,7 +108,7 @@ class BlogController extends Controller
     }
 
     public function destroy($id)
-    { 
+    {
         $blog = Blog::find($id);
 
         if (File::exists("uploads/blog/" . $blog->image)) {
@@ -106,17 +116,11 @@ class BlogController extends Controller
         }
 
         $blog->delete();
-       if($blog)
-       {
-        return response()->json(['status'=>1 , 'msg' => 'Blog deleted successfully']);
-
-       }
-       else
-       {
-        return response()->json(['status'=>1 , 'msg' => 'Something went wrong']);
-
-       }
-       
+        if ($blog) {
+            return response()->json(['status' => 1, 'msg' => 'Blog deleted successfully']);
+        } else {
+            return response()->json(['status' => 1, 'msg' => 'Something went wrong']);
+        }
     }
 
     public function status($id)
