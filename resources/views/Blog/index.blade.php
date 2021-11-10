@@ -60,19 +60,14 @@
                                     <label for="">Description</label>
                                     <textarea name="description" value="{{ old('description') }} 
                                         " id="" rows="5" class="form-control"
-                                        placeholder="Enter Your Blog Description">@if ($view_type == 'edit'){{ $blog->description }}
-                                    
-                                    @endif</textarea>
+                                        placeholder="Enter Your Blog Description">{{ (isset($blog->description) && $blog->description!='' ? $blog->description : old('description'))  }}</textarea>
 
                                     <span class="text-danger fw-bold">@error('description')** {{ $message }}
                                         **@enderror</span>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="">Author</label>
-                                    <input type="text" name="author" value="{{ old('author') }}@if ($view_type=='edit'
-                                        ){{ $blog->author }}
-
-                                    @endif" class="form-control"
+                                    <input type="text" name="author" value="{{ (isset($blog->author) && $blog->author!='' ? $blog->author : old('author'))  }}" class="form-control"
                                     placeholder="Enter Your Blog Author Name">
                                     <span class="text-danger fw-bold">@error('author') ** {{ $message }}
                                         **@enderror</span>
@@ -90,7 +85,7 @@
                             <input class="form-check-input" type="radio" name="status" value="0" @if ($view_type == 'edit')
                             {{ $blog->status == 0 ? 'checked' : '' }}
                             @endif
-                            id="flexRadioDefault2" checked>
+                            id="flexRadioDefault2" >
                             <label class="form-check-label" for="flexRadioDefault2">
                                 Inactive
                             </label>
@@ -98,10 +93,7 @@
         </div>
         <div class="form-group mb-2">
             <label for="">Blog Image</label>
-            <input type="file" name="image" value="   @if ($view_type=='edit'
-                ){{ $blog->image }}
-
-            @endif" class="form-control" accept="image/*" />
+            <input type="file" name="image" value="   {{ (isset($blog->image) && $blog->image!='' ? $blog->image : old('image'))  }}" class="form-control" accept="image/*" />
 
             <span class="text-danger fw-bold">@error('image') ** {{ $message }}
                 **@enderror</span>
@@ -205,9 +197,10 @@
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <script src="{{ asset('assets/datatables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- ajax delete request --}}
-
+{{JsValidator::formRequest('App\Http\Requests\BlogRequest')}}
     <script>
         function deleteBlog(obj, blog_url) {
 
