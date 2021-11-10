@@ -20,8 +20,8 @@ class BlogController extends Controller
         if ($request->ajax()) {
           return  DataTables::of($blog)->addIndexColumn()
           ->addColumn('Actions', function($blog) {
-            return '<button type="button" class="btn btn-success btn-sm" id="getEditArticleData" data-id="'.$blog->id.'">Edit</button>
-                <button type="button" data-id="'.$blog->id.'" data-toggle="modal" data-target="#DeleteArticleModal" class="btn btn-danger btn-sm" id="getDeleteId">Delete</button>';
+            return '<button type="button"  class="btn btn-success btn-sm" id="blogEdit" data-id="'.$blog->id.'">Edit</button>
+                <button type="button" data-id="'.$blog->id.'" onclick="deleteBlog()"  class="btn btn-danger btn-sm" id="deleteBlog">Delete</button>';
         })
         ->rawColumns(['Actions'])
         ->make(true);

@@ -198,6 +198,15 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- ajax delete request --}}
  {!!JsValidator::formRequest('App\Http\Requests\BlogRequest')!!}
+ <script>
+     $(document).ready(function () {
+         
+     $('#deleteBlog').click(function (e) { 
+         e.preventDefault();
+         alert('jteindra kumar');
+     });
+     });
+ </script>
     <script>
         function deleteBlog(obj, blog_url) {
 
@@ -206,7 +215,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    type: "delete",
+                    type: "post",
                     url: blog_url,
                     dataType: "json",
                     success: function(response) {
@@ -235,9 +244,15 @@
                 {data: 'title', name: 'title'},
                 {data: 'description', name: 'description'},
                 {data: 'author', name: 'author'},
-                {data: 'status', name: 'status' },
-                {data: 'image', name: 'image' },
-                {data: 'Actions', name: 'Actions',orderable:false,serachable:false,sClass:'text-center'},
+               { data: 'status', name: 'status',
+                    render: function ( data, type, full, meta ) {
+                    return data ? "active" : "not active" ;
+                    }},
+                {data: 'image', name: 'image',
+                render: function( data, type, full, meta ) {
+            return "<img src=\"uploads/blog/" + data + "\" height=\"50\"/>";
+        } },
+                {data: 'Actions', name: 'Actions',orderable:false,searchable:false,sClass:'text-center'},
             ]
         });
 </script>
