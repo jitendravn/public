@@ -52,7 +52,7 @@
                                 <div class="form-group mb-2">
                                     <label for="">Title</label>
                                     <input type="text" name="title" value="{{ old('title') }} 
-                                          @if ($view_type=='edit'
+                                            @if ($view_type=='edit'
                                         ){{ $blog->title }}
 
                                     @endif" class="form-control "
@@ -74,7 +74,7 @@
                                 <div class="form-group mb-2">
                                     <label for="">Author</label>
                                     <input type="text" name="author" value="{{ old('author') }} 
-                                          @if ($view_type=='edit'
+                                            @if ($view_type=='edit'
                                         ){{ $blog->author }}
 
                                     @endif" class="form-control"
@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="">Blog Image</label>
-                                    <input type="file" name="image" value="   @if ($view_type=='edit' ){{ $blog->author }}
+                                    <input type="file" name="image" value="   @if ($view_type=='edit' ){{ $blog->image }}
 
                                     @endif" class="form-control" accept="image/*" />
 
@@ -139,7 +139,7 @@
                         </div>
                     @endif
 
-                        
+
                     <div class="card shadow">
                         <div class="card-header bg-danger text-white">Blog Details</div>
                         <div class="card-body">
@@ -164,17 +164,25 @@
                                             <td>{{ $item->title }}</td>
                                             <td>{{ $item->description }}</td>
                                             <td>{{ $item->author }}</td>
-                                            <td><a href="{{ url('status', $item->id) }}"
-                                                    class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</a>
+                                            <td>
+                                                                                                
+                                              
+
+
                                             </td>
+                                            {{-- <td><a href="{{ url('status', $item->id) }}"
+                                                    class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</a>
+                                            </td> --}}
                                             <td><img src="{{ 'uploads/blog/' . $item->image }}"
                                                     alt="{{ $item->title }}" class="img-fluid w-50"></td>
                                             <td><a href="{{ route('blog.edit', $item->id) }}"
                                                     class="btn btn-warning">Edit</a>
                                             </td>
-                                            
-                                            <td><button onclick="deleteBlog(this,'{{route('blog.destroy', $item->id) }}')" class="btn btn-danger">Delete</button>
-                                             
+
+                                            <td><button
+                                                    onclick="deleteBlog(this,'{{ route('blog.destroy', $item->id) }}')"
+                                                    class="btn btn-danger">Delete</button>
+
                                             </td>
                                         </tr>
 
@@ -205,35 +213,32 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- ajax delete request --}}
     <script>
-        function deleteBlog(obj,blog_url) {
+        function deleteBlog(obj, blog_url) {
 
-            
 
-            var url=blog_url;
-      
+
+            var url = blog_url;
+
             var parent = $(this).parent();
             if (confirm('Are You sure you want to delete this blog')) {
-                var id= $(this).data('id');
+
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "delete",
-                    url:url,
-                    data: {
-                        id: id
-                    },
+                    url: url,
                     dataType: "json",
                     success: function(response) {
                         if (response.status == 1) {
 
-                            swal('success', response.msg, '');
+                            swal('', response.msg, 'success');
                             console.warn('#row');
                             $('#row' + id).remove();
 
 
                         } else {
-                            swal('warning', response.msg, '');
+                            swal('', response.msg, 'error');
                             $('#row' + id).remove()
                         }
                     }

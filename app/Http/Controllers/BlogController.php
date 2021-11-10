@@ -123,7 +123,7 @@ class BlogController extends Controller
        }
        else
        {
-        return response()->json(['status'=>1 , 'msg' => 'Blog deleted successfully']);
+        return response()->json(['status'=>1 , 'msg' => 'Something went wrong']);
 
        }
        
