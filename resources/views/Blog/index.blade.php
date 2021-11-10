@@ -55,7 +55,8 @@
                                     <input type="text" name="title" value="{{ old('title') }}@if ($view_type=='edit'
                                         ){{ $blog->title }}
                                     @endif" class="form-control "
-                                    placeholder="Enter Your Blog Name">
+                                    placeholder="Enter Your Blog Title" >
+                                    
                                     <span class="text-danger fw-bold">@error('title')** {{ $message }}
                                         **@enderror</span>
                                 </div>
@@ -76,7 +77,7 @@
                                         ){{ $blog->author }}
 
                                     @endif" class="form-control"
-                                    placeholder="Enter Your Blog Author Name">
+                                    placeholder="Enter Your Blog Author Name" required>
                                     <span class="text-danger fw-bold">@error('author') ** {{ $message }}
                                         **@enderror</span>
                                 </div>

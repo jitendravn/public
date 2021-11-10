@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBlog;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -33,18 +34,19 @@ class BlogController extends Controller
         return view('Blog.index', compact(['blog','view_type']));
     }
 
-    public function store(Request $request)
+    public function store(StoreBlog $request)
     {
        
         $blog = new Blog();
-        $request->validate(
-            [
-                'title' => 'required',
-                'description' => 'required',
-                'author' => 'required',
-                'image' => 'required|mimes:png,jpg,jpeg',
-            ]
-        );
+        // $request->validate(
+        //     [
+        //         'title' => 'required',
+        //         'description' => 'required',
+        //         'author' => 'required',
+        //         'image' => 'required|mimes:png,jpg,jpeg',
+        //     ]
+        // );
+       $request->validate();
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
