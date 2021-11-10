@@ -31,15 +31,15 @@ class StoreBlog extends FormRequest
             'image' => 'required|mimes:png,jpg,jpeg',
         ];
     }
-    // public function messages()
-    // {
-    //     return [
-    //         'title.required' => 'Title is required!',
-    //         'description.required' => 'Description is required!',
-    //         'author.required' => 'Author is required!',
-    //         'status.required' => 'Status is required!',
-    //         'image.required' => 'author is required!',
-    //         'image.mimes' => 'You can upload only jpg,png,jpeg ',
-    //     ];
-    // }
+    public function messages()
+    {
+        return [
+            'title.required' => 'Title is required!',
+            'description.required' => 'Description is required!',
+            'author.required' => 'Author is required!',
+            'status.required' => 'Status is required!',
+            'image.required' => 'Image is required!',
+            'image.mimes' => 'You can upload only jpg,png,jpeg ',
+        ];
+    }
 }

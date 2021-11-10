@@ -77,7 +77,7 @@
                                         ){{ $blog->author }}
 
                                     @endif" class="form-control"
-                                    placeholder="Enter Your Blog Author Name" required>
+                                    placeholder="Enter Your Blog Author Name">
                                     <span class="text-danger fw-bold">@error('author') ** {{ $message }}
                                         **@enderror</span>
                                 </div>

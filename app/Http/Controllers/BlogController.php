@@ -38,6 +38,7 @@ class BlogController extends Controller
     {
        
         $blog = new Blog();
+     $request->validate();
         // $request->validate(
         //     [
         //         'title' => 'required',
@@ -46,7 +47,7 @@ class BlogController extends Controller
         //         'image' => 'required|mimes:png,jpg,jpeg',
         //     ]
         // );
-       $request->validate();
+       
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $ext = $file->getClientOriginalExtension();
@@ -74,18 +75,19 @@ class BlogController extends Controller
         return view('Blog.index', compact(['blog','view_type']));
     }
 
-    public function update(Request $request, $id)
+    public function update(StoreBlog $request, $id)
     {
         
         $blog = Blog::find($id);
-        $request->validate(
-            [
-                'title' => 'required',
-                'description' => 'required',
-                'author' => 'required',
-                'image' => 'required|mimes:png,jpg,jpeg',
-            ]
-        );
+        // $request->validate(
+        //     [
+        //         'title' => 'required',
+        //         'description' => 'required',
+        //         'author' => 'required',
+        //         'image' => 'required|mimes:png,jpg,jpeg',
+        //     ]
+        // );
+        $request->validate();
         if (File::exists("uploads/blog/" . $blog->image)) {
             File::delete("uploads/blog/" . $blog->image);
         }
