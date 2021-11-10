@@ -164,15 +164,10 @@
                                             <td>{{ $item->title }}</td>
                                             <td>{{ $item->description }}</td>
                                             <td>{{ $item->author }}</td>
-                                            <td>
-                                                                                                
-                                              
-
-
-                                            </td>
-                                            {{-- <td><a href="{{ url('status', $item->id) }}"
+                                            
+                                            <td><a href="{{ url('status', $item->id) }}"
                                                     class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</a>
-                                            </td> --}}
+                                            </td>
                                             <td><img src="{{ 'uploads/blog/' . $item->image }}"
                                                     alt="{{ $item->title }}" class="img-fluid w-50"></td>
                                             <td><a href="{{ route('blog.edit', $item->id) }}"
