@@ -39,7 +39,7 @@
                         </div>
                     @endif
                     <div class="card shadow">
-                        <div class="card-header bg-danger text-white">Add Blog</div>
+                        <div class="card-header bg-danger text-white"> {{ $view_type == 'edit' ? 'Edit' : 'Add' }} Blog</div>
 
                         <form
                             action="{{ $view_type == 'edit' ? route('blog.update', $blog->id) : route('blog.store') }}"
@@ -52,13 +52,9 @@
 
                                 <div class="form-group mb-2">
                                     <label for="">Title</label>
-                                    <input type="text" name="title" value="{{ old('title') }}@if ($view_type=='edit'
-                                        ){{ $blog->title }}
-                                    @endif" class="form-control "
-                                    placeholder="Enter Your Blog Title" >
+                                    <input type="text" name="title" value="{{ (isset($blog->title) && $blog->title!='' ? $blog->title : old('title'))  }}" class="form-control" placeholder="Enter Your Blog Title" >
                                     
-                                    <span class="text-danger fw-bold">@error('title')** {{ $message }}
-                                        **@enderror</span>
+                                    <span class="text-danger fw-bold">@error('title')** {{ $message }} **@enderror</span>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="">Description</label>
@@ -82,22 +78,22 @@
                                         **@enderror</span>
                                 </div>
                                 <div class="form-group mb-2 mt-2">
-                                    <label for="">Blog_Status : </label>
+                                    <label for="">Blog Status : </label>
 
                                     <input class="form-check-input" type="radio" name="status" value="1" @if ($view_type == 'edit')
                                     {{ $blog->status == 1 ? 'checked' : '' }}
-            @endif
-            id="flexRadioDefault1">
-            <label class="form-check-label" for="flexRadioDefault1">
-                Active
-            </label>
-            <input class="form-check-input" type="radio" name="status" value="0" @if ($view_type == 'edit')
-            {{ $blog->status == 0 ? 'checked' : '' }}
-            @endif
-            id="flexRadioDefault2" checked>
-            <label class="form-check-label" for="flexRadioDefault2">
-                Inactive
-            </label>
+                            @endif
+                            id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Active
+                            </label>
+                            <input class="form-check-input" type="radio" name="status" value="0" @if ($view_type == 'edit')
+                            {{ $blog->status == 0 ? 'checked' : '' }}
+                            @endif
+                            id="flexRadioDefault2" checked>
+                            <label class="form-check-label" for="flexRadioDefault2">
+                                Inactive
+                            </label>
 
         </div>
         <div class="form-group mb-2">
@@ -168,18 +164,12 @@
                                 <td>{{ $item->title }}</td>
                                 <td>{{ $item->description }}</td>
                                 <td>{{ $item->author }}</td>
-                                {{-- <td>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
-                                            {{ $item->status == 1 ? 'checked' : '' }}  >
-                                    </div>
-
-                                </td> --}}
+                               
                                 <td><a href="{{ url('status', $item->id) }}"
                                         class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</a>
                                 </td>
 
-                                <td><img src="{{ 'uploads/blog/' . $item->image }}" alt="{{ $item->title }}"
+                                <td><img src="{{ asset('uploads/blog/' . $item->image) }}" alt="{{ $item->title }}"
                                         class="img-fluid w-50 img-thumbnail">
                                 </td>
                                 <td><a href="{{ route('blog.edit', $item->id) }}" class="btn btn-warning">Edit</a>
@@ -221,7 +211,6 @@
     <script>
         function deleteBlog(obj, blog_url) {
 
-
             if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
                     headers: {
@@ -231,10 +220,9 @@
                     url: blog_url,
                     dataType: "json",
                     success: function(response) {
-                        var parent = $(obj).parent();
                         if (response.status == 1) {
                             swal('', response.msg, 'success');
-                            parent.closest('tr').remove();
+                            $(obj).parent().closest('tr').remove();
                         } else {
                             swal('', response.msg, 'error');
 
