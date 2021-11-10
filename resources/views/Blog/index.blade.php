@@ -15,9 +15,9 @@
 
 <body>
     <div class="container">
-        <div class="row mt-4">
+        <div class="row mt-4 ">
             @if ($view_type == 'add' || $view_type == 'edit')
-                <div class="row mb-2">
+                <div class="row mb-2 ">
                     <div class="col-md-3 ">
                         <a href="{{ route('blog.index') }}" class="btn btn-danger">Go to Listing</a>
                     </div>
@@ -31,7 +31,8 @@
                 </div>
             @endif
             @if ($view_type == 'add' || $view_type == 'edit')
-                <div class="col-md-12">
+                <div class="col-md-3"></div>
+                <div class="col-md-5">
                     @if (Session::has('status'))
                         <div class="alert alert-danger alert-dismissible fade show">
                             {{ session::get('status') }}
@@ -51,10 +52,8 @@
 
                                 <div class="form-group mb-2">
                                     <label for="">Title</label>
-                                    <input type="text" name="title" value="{{ old('title') }} 
-                                             @if ($view_type=='edit'
+                                    <input type="text" name="title" value="{{ old('title') }}@if ($view_type=='edit'
                                         ){{ $blog->title }}
-
                                     @endif" class="form-control "
                                     placeholder="Enter Your Blog Name">
                                     <span class="text-danger fw-bold">@error('title')** {{ $message }}
@@ -73,8 +72,7 @@
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="">Author</label>
-                                    <input type="text" name="author" value="{{ old('author') }} 
-                                             @if ($view_type=='edit'
+                                    <input type="text" name="author" value="{{ old('author') }}@if ($view_type=='edit'
                                         ){{ $blog->author }}
 
                                     @endif" class="form-control"
@@ -85,117 +83,128 @@
                                 <div class="form-group mb-2 mt-2">
                                     <label for="">Blog_Status : </label>
 
-                                    <input class="form-check-input" type="radio" name="status" value="1"
-                                        id="flexRadioDefault1">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        Active
-                                    </label>
-                                    <input class="form-check-input" type="radio" name="status" value="0"
-                                        id="flexRadioDefault2" checked>
-                                    <label class="form-check-label" for="flexRadioDefault2">
-                                        Inactive
-                                    </label>
-
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="">Blog Image</label>
-                                    <input type="file" name="image" value="    @if ($view_type=='edit' ){{ $blog->image }}
-
-                                    @endif" class="form-control" accept="image/*" />
-
-                                    <span class="text-danger fw-bold">@error('image') ** {{ $message }}
-                                        **@enderror</span>
-                                </div>
-
-                            </div>
-                            <div class="card-footer">
-                                @if ($view_type == 'edit')
-
-                                    <button class="btn btn-danger form-control">Update</button>
-                                @else
-                                    <button class="btn btn-danger form-control">Save</button>
-                                @endif
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
-            @else
-
-                <div class="col-md-12 " id="table">
-                    @if (Session::has('delete'))
-                        <div class="alert alert-danger alert-dismissible fade show delete">
-                            {{ session::get('delete') }}
-                        </div>
-                    @endif
-                    @if (Session::has('update'))
-                        <div class="alert alert-danger alert-dismissible fade show ">
-                            {{ session::get('update') }}
-                        </div>
-                    @endif
-                    @if (Session::has('blogStatus'))
-                        <div class="alert alert-danger alert-dismissible fade show ">
-                            {{ session::get('blogStatus') }}
-                        </div>
-                    @endif
-
-
-                    <div class="card shadow">
-                        <div class="card-header bg-danger text-white">Blog Details</div>
-                        <div class="card-body">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Title</th>
-                                        <th>Description</th>
-                                        <th>Author</th>
-                                        <th>Status</th>
-                                        <th>Image</th>
-                                        <th colspan="2" class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-
-                                    @forelse ($blog as $item)
-                                        <tr id='row{{ $item->id }}'>
-                                            <td>{{ $item->id }}</td>
-                                            <td>{{ $item->title }}</td>
-                                            <td>{{ $item->description }}</td>
-                                            <td>{{ $item->author }}</td>
-
-                                            <td><a href="{{ url('status', $item->id) }}"
-                                                    class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</a>
-                                            </td>
-                                           
-                                            <td><img src="{{ 'uploads/blog/' . $item->image }}"
-                                                    alt="{{ $item->title }}" class="img-fluid w-50 img-thumbnail">
-                                            </td>
-                                            <td><a href="{{ route('blog.edit', $item->id) }}"
-                                                    class="btn btn-warning">Edit</a>
-                                            </td>
-
-                                            <td><button onclick="deleteBlog(this,'{{ route('blog.destroy', $item->id) }}')" class="btn btn-danger">Delete</button>
-
-                                            </td>
-                                        </tr>
-
-                                    @empty
-                                        <tr>
-                                            <th class=" text-center" colspan="5">Blog Data Not Found</th>
-                                        </tr>
-                                    @endforelse
-
-                                </tbody>
-
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
+                                    <input class="form-check-input" type="radio" name="status" value="1" @if ($view_type == 'edit')
+                                    {{ $blog->status == 1 ? 'checked' : '' }}
             @endif
+            id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+                Active
+            </label>
+            <input class="form-check-input" type="radio" name="status" value="0" @if ($view_type == 'edit')
+            {{ $blog->status == 0 ? 'checked' : '' }}
+            @endif
+            id="flexRadioDefault2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+                Inactive
+            </label>
+
         </div>
+        <div class="form-group mb-2">
+            <label for="">Blog Image</label>
+            <input type="file" name="image" value="   @if ($view_type=='edit'
+                ){{ $blog->image }}
+
+            @endif" class="form-control" accept="image/*" />
+
+            <span class="text-danger fw-bold">@error('image') ** {{ $message }}
+                **@enderror</span>
+        </div>
+
+    </div>
+    <div class="card-footer">
+        @if ($view_type == 'edit')
+
+            <button class="btn btn-danger form-control">Update</button>
+        @else
+            <button class="btn btn-danger form-control">Save</button>
+        @endif
+    </div>
+    </form>
+
+    </div>
+    </div>
+@else
+
+    <div class="col-md-12 " id="table">
+        @if (Session::has('delete'))
+            <div class="alert alert-danger alert-dismissible fade show delete">
+                {{ session::get('delete') }}
+            </div>
+        @endif
+        @if (Session::has('update'))
+            <div class="alert alert-danger alert-dismissible fade show ">
+                {{ session::get('update') }}
+            </div>
+        @endif
+        @if (Session::has('blogStatus'))
+            <div class="alert alert-danger alert-dismissible fade show ">
+                {{ session::get('blogStatus') }}
+            </div>
+        @endif
+
+
+        <div class="card shadow">
+            <div class="card-header bg-danger text-white">Blog Details</div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Author</th>
+                            <th>Status</th>
+                            <th>Image</th>
+                            <th colspan="2" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @forelse ($blog as $item)
+                            <tr id='row{{ $item->id }}'>
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->title }}</td>
+                                <td>{{ $item->description }}</td>
+                                <td>{{ $item->author }}</td>
+                                {{-- <td>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                            {{ $item->status == 1 ? 'checked' : '' }}  >
+                                    </div>
+
+                                </td> --}}
+                                <td><a href="{{ url('status', $item->id) }}"
+                                        class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</a>
+                                </td>
+
+                                <td><img src="{{ 'uploads/blog/' . $item->image }}" alt="{{ $item->title }}"
+                                        class="img-fluid w-50 img-thumbnail">
+                                </td>
+                                <td><a href="{{ route('blog.edit', $item->id) }}" class="btn btn-warning">Edit</a>
+                                </td>
+
+                                <td><button onclick="deleteBlog(this,'{{ route('blog.destroy', $item->id) }}')"
+                                        class="btn btn-danger">Delete</button>
+
+                                </td>
+                            </tr>
+
+                        @empty
+                            <tr>
+                                <th class=" text-center" colspan="5">Blog Data Not Found</th>
+                            </tr>
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+    @endif
+    </div>
     </div>
 
 
@@ -210,7 +219,7 @@
 
     <script>
         function deleteBlog(obj, blog_url) {
-            
+
 
             if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
@@ -227,7 +236,7 @@
                             parent.closest('tr').remove();
                         } else {
                             swal('', response.msg, 'error');
-                           
+
                         }
                     }
                 });
