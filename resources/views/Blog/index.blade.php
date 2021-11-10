@@ -139,8 +139,8 @@
                         </div>
                     @endif
 
-                        @if (session::has('msg'))
-                            <div class="alert alert-danger">{{session::get('msg')}}</div>
+                        @if (session::has('status'))
+                            <div class="alert alert-danger">{{session::get('status')}}</div>
                         @endif
                     <div class="card shadow">
                         <div class="card-header bg-danger text-white">Blog Details</div>
