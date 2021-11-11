@@ -229,22 +229,7 @@
             });
         });
     </script> --}}
-    <script>
-        $(document).on('click', '#editBlog', function() {
-            var id = $(this).data('id');
-            url = '{{ route('blog.edit', ':id') }}';
-            alert(url);
-            $.ajax({
-                type: "post",
-                url: url,
-                data: $('#data-table').serialize(),
-                dataType: "json",
-                success: function(response) {
-
-                }
-            });
-        });
-    </script>
+    
     <script>
         function deleteBlog(url) {
 
@@ -265,7 +250,7 @@
                     success: function(response) {
                         if (response.status == 1) {
                             swal('', response.msg, 'success');
-                            $(obj).parent().closest('tr').remove();
+                            $('#data-table').DataTable().ajax.reload();
                         } else {
                             swal('', response.msg, 'error');
 
