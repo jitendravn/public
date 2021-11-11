@@ -58,7 +58,7 @@
                                         class="form-control" placeholder="Enter Your Blog Title">
 
                                     <span class="text-danger fw-bold">@error('title')** {{ $message }}
-                                        {!!$validation!!}
+                                            {!! $validation !!}
                                         **@enderror</span>
                                 </div>
                                 <div class="form-group mb-2">
@@ -81,93 +81,89 @@
 
                                 <div class="form-group mb-2 mt-2">
                                     <label for="">Blog Status : </label>
-                                    
-                                    <input class="form-check-input" type="radio" name="status"
-                                        value="1" 
-                                        @if ( $view_type=='edit' )
-                                        {{ $blog->status==1 ?'checked':''}}
-                                        @endif
-                                        id="flexRadioDefault1">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        Active
-                                    </label>
-                                    <input class="form-check-input" type="radio" name="status"
-                                        value="0"
-                                        @if ($view_type=='edit')
-                                        {{ $blog->status==0 ?'checked':''}}
-                                        @endif
-                                        id="flexRadioDefault2">
-                                    <label class="form-check-label" for="flexRadioDefault2">
-                                        Inactive
-                                    </label>
-                                    
-                                    <span class="text-danger fw-bold">@error('status') ** {{ $message }}
-                                        **@enderror</span>
 
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="">Blog Image</label>
-                                    <input type="file" name="image"
-                                        value="   {{ isset($blog->image) && $blog->image != '' ? $blog->image : old('image') }}"
-                                        class="form-control" accept="image/*" />
+                                    <input class="form-check-input" type="radio" name="status" value="1" @if ($view_type == 'edit')
+                                    {{ $blog->status == 1 ? 'checked' : '' }}
+            @endif
+            id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+                Active
+            </label>
+            <input class="form-check-input" type="radio" name="status" value="0" @if ($view_type == 'edit')
+            {{ $blog->status == 0 ? 'checked' : '' }}
+            @endif
+            id="flexRadioDefault2">
+            <label class="form-check-label" for="flexRadioDefault2">
+                Inactive
+            </label>
 
-                                    <span class="text-danger fw-bold">@error('image') ** {{ $message }}
-                                        **@enderror</span>
-                                </div>
+            <span class="text-danger fw-bold">@error('status') ** {{ $message }}
+                **@enderror</span>
 
-                            </div>
-                            <div class="card-footer">
-                                @if ($view_type == 'edit')
+        </div>
+        <div class="form-group mb-2">
+            <label for="">Blog Image</label>
+            <input type="file" name="image"
+                value="   {{ isset($blog->image) && $blog->image != '' ? $blog->image : old('image') }}"
+                class="form-control" accept="image/*" />
 
-                                    <button class="btn btn-danger form-control">Update</button>
-                                @else
-                                    <button class="btn btn-danger form-control">Save</button>
-                                @endif
-                            </div>
-                        </form>
+            <span class="text-danger fw-bold">@error('image') ** {{ $message }}
+                **@enderror</span>
+        </div>
 
-                    </div>
-                </div>
-            @else
+    </div>
+    <div class="card-footer">
+        @if ($view_type == 'edit')
 
-                <div class="col-md-12 " id="table">
-                    @if (Session::has('delete'))
-                        <div class="alert alert-danger alert-dismissible fade show delete">
-                            {{ session::get('delete') }}
-                        </div>
-                    @endif
-                    @if (Session::has('update'))
-                        <div class="alert alert-danger alert-dismissible fade show ">
-                            {{ session::get('update') }}
-                        </div>
-                    @endif
-                    @if (Session::has('blogStatus'))
-                        <div class="alert alert-danger alert-dismissible fade show ">
-                            {{ session::get('blogStatus') }}
-                        </div>
-                    @endif
+            <button class="btn btn-danger form-control">Update</button>
+        @else
+            <button class="btn btn-danger form-control">Save</button>
+        @endif
+    </div>
+    </form>
+
+    </div>
+    </div>
+@else
+
+    <div class="col-md-12 " id="table">
+        @if (Session::has('delete'))
+            <div class="alert alert-danger alert-dismissible fade show delete">
+                {{ session::get('delete') }}
+            </div>
+        @endif
+        @if (Session::has('update'))
+            <div class="alert alert-danger alert-dismissible fade show ">
+                {{ session::get('update') }}
+            </div>
+        @endif
+        @if (Session::has('blogStatus'))
+            <div class="alert alert-danger alert-dismissible fade show ">
+                {{ session::get('blogStatus') }}
+            </div>
+        @endif
 
 
-                    <div class="card shadow">
-                        <div class="card-header bg-danger text-white">Blog Details</div>
-                        <div class="card-body">
-                            
-                            <table class="table table-bordered table-striped" id="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Title</th>
-                                        <th>Description</th>
-                                        <th>Author</th>
-                                        <th>Status</th>
-                                        <th>Image</th>
-                                        <th colspan="2" class="text-center">Action</th>
-                                    </tr>
-                                </thead>
+        <div class="card shadow">
+            <div class="card-header bg-danger text-white">Blog Details</div>
+            <div class="card-body">
 
-                                <tbody>
+                <table class="table table-bordered table-striped" id="data-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Author</th>
+                            <th>Status</th>
+                            <th>Image</th>
+                            <th colspan="2" class="text-center">Action</th>
+                        </tr>
+                    </thead>
 
-                                    {{-- @forelse ($blog as $item)
+                    <tbody>
+
+                        {{-- @forelse ($blog as $item)
                                         <tr id='row{{ $item->id }}'>
                                             <td>{{ $item->id }}</td>
                                             <td>{{ $item->title }}</td>
@@ -198,15 +194,15 @@
                                         </tr>
                                     @endforelse --}}
 
-                                </tbody>
+                    </tbody>
 
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-            @endif
+                </table>
+            </div>
         </div>
+
+    </div>
+    @endif
+    </div>
     </div>
 
 
@@ -219,9 +215,9 @@
     <script src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- ajax delete request --}}
-    @if ($view_type=='add'||$view_type=='edit')
-        
-    {!!$validation!!}  
+    @if ($view_type == 'add' || $view_type == 'edit')
+
+        {!! $validation !!}
     @endif
     {{-- {!! JsValidator::formRequest('App\Http\Requests\BlogRequest') !!} --}}
     {{-- <script>
@@ -234,38 +230,37 @@
         });
     </script> --}}
     <script>
-        $(document).on('click','#editBlog', function () {
-            var id=$(this).data('id');
-            url = '{{ route("blog.edit",":id") }}';
+        $(document).on('click', '#editBlog', function() {
+            var id = $(this).data('id');
+            url = '{{ route('blog.edit', ':id') }}';
             alert(url);
             $.ajax({
                 type: "post",
                 url: url,
                 data: $('#data-table').serialize(),
                 dataType: "json",
-                success: function (response) {
-                    
+                success: function(response) {
+
                 }
             });
         });
     </script>
     <script>
-       function deleteBlog(id){
-           
-           
-           var id = $(this).data('id');
-           alert(id);
-          
-           
-    
-           if (confirm('Are You sure you want to delete this blog')) {
+        function deleteBlog(url) {
+
+
+            //    var id = $(this).data('id');
+            alert(url);
+
+
+
+            if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "delete",
-                    url:id,
-                    data:{id:id}
+                    url: url,
                     dataType: "json",
                     success: function(response) {
                         if (response.status == 1) {
@@ -307,31 +302,53 @@
         }
     </script> --}}
     <script>
-    
-    var table = $('#data-table').DataTable({
+        var table = $('#data-table').DataTable({
             processing: true,
             serverSide: true,
             autoWidth: false,
-            
+
             ajax: '{{ route('blog.index') }}',
-            columns: [
-                {data: 'id', name: 'id'},
-                {data: 'title', name: 'title'},
-                {data: 'description', name: 'description'},
-                {data: 'author', name: 'author'},
-               { data: 'status', name: 'status',
-                    render: function ( data, type, full, meta ) {
-                    return data ? "active" : "not active" ;
-                    }},
-                {data: 'image', name: 'image',
-                render: function( data, type, full, meta ) {
-            return "<img src=\"uploads/blog/" + data + "\" height=\"50\"/>";
-        } },
-                {data: 'actions', name: 'actions',orderable:false,searchable:false,sClass:'text-center'},
+            columns: [{
+                    data: 'id',
+                    name: 'id'
+                },
+                {
+                    data: 'title',
+                    name: 'title'
+                },
+                {
+                    data: 'description',
+                    name: 'description'
+                },
+                {
+                    data: 'author',
+                    name: 'author'
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                    render: function(data, type, full, meta) {
+                        return data ? "active" : "not active";
+                    }
+                },
+                {
+                    data: 'image',
+                    name: 'image',
+                    render: function(data, type, full, meta) {
+                        return "<img src=\"uploads/blog/" + data + "\" height=\"50\"/>";
+                    }
+                },
+                {
+                    data: 'actions',
+                    name: 'actions',
+                    orderable: false,
+                    searchable: false,
+                    sClass: 'text-center'
+                },
             ]
-            
+
         });
-</script>
+    </script>
 </body>
 
 </html>
