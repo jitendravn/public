@@ -81,9 +81,6 @@
                                 <div class="form-group mb-2 mt-2">
                                     <label for="">Blog Status : </label>
                                     
-                                   
-                                        
-                                  
                                     <input class="form-check-input" type="radio" name="status"
                                         value="1" 
                                         @if ( $view_type=='edit' )
@@ -96,7 +93,7 @@
                                     <input class="form-check-input" type="radio" name="status"
                                         value="0"
                                         @if ($view_type=='edit')
-                                        {{ $blog->status==1 ?'checked':''}}
+                                        {{ $blog->status==0 ?'checked':''}}
                                         @endif
                                         id="flexRadioDefault2">
                                     <label class="form-check-label" for="flexRadioDefault2">
