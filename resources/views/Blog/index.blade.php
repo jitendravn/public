@@ -234,16 +234,29 @@
         });
     </script> --}}
     <script>
-        $(document).on('click','.edit', function () {
-            console.log('edit');
+        $(document).on('click','#editBlog', function () {
+            var id=$(this).data('id');
+            url = '{{ route("blog.edit",":id") }}';
+            alert(url);
+            $.ajax({
+                type: "post",
+                url: url,
+                data: $('#data-table').serialize(),
+                dataType: "json",
+                success: function (response) {
+                    
+                }
+            });
         });
     </script>
     <script>
-        $(document).on('click','#delete', function () {
-           var id = $(this).data('id');
+       function deleteBlog(id){
            
+           
+           var id = $(this).data('id');
+           alert(id);
           
-           var SITEURL = '{{URL::to('destroy',+id)}}';
+           
     
            if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
@@ -251,8 +264,8 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "delete",
-                    url: SITEURL,
-                    
+                    url:id,
+                    data:{id:id}
                     dataType: "json",
                     success: function(response) {
                         if (response.status == 1) {
@@ -265,7 +278,7 @@
                     }
                 });
             }
-        });
+        }
     </script>
     {{-- <script>
         function deleteBlog(id) {
@@ -316,6 +329,7 @@
         } },
                 {data: 'actions', name: 'actions',orderable:false,searchable:false,sClass:'text-center'},
             ]
+            
         });
 </script>
 </body>
