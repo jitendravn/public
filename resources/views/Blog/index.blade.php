@@ -240,17 +240,19 @@
     </script>
     <script>
         $(document).on('click','#delete', function () {
-           var id = $('#delete').attr('data-id');
+           var id = $(this).data('id');
            
-          var url="{{route('blog.destroy',+id)}}",+id;
-          alert(url);
+          
+           var SITEURL = '{{URL::to('destroy',+id)}}';
+    
            if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "delete",
-                    url: url,
+                    url: SITEURL,
+                    
                     dataType: "json",
                     success: function(response) {
                         if (response.status == 1) {
