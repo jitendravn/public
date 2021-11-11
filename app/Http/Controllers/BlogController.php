@@ -23,7 +23,7 @@ class BlogController extends Controller
             return Datatables::of($blog)
                 ->addIndexColumn()
                 ->addColumn('actions', function($row){
-                    $btn = '<button class="btn btn-primary btn-sm" data-id="'.$row->id.'" id="editBlog">Edit</button> <button onclick="deleteBlog(\''.route(blog.destroy,$row->id.'\'))" class="btn btn-danger btn-sm " data-id="'.$row->id.'">Delete</button>';
+                    $btn = '<button class="btn btn-primary btn-sm" id="editBlog">Edit</button> <button onclick="deleteBlog(\''.route("blog.destroy",$row->id).'\')" class="btn btn-danger btn-sm">Delete</button>';
                     return $btn;
                 })
                 ->rawColumns(['actions'])
