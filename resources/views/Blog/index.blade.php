@@ -151,6 +151,7 @@
                     <div class="card shadow">
                         <div class="card-header bg-danger text-white">Blog Details</div>
                         <div class="card-body">
+                            
                             <table class="table table-bordered table-striped" id="data-table">
                                 <thead>
                                     <tr>
@@ -166,7 +167,7 @@
 
                                 <tbody>
 
-                                    @forelse ($blog as $item)
+                                    {{-- @forelse ($blog as $item)
                                         <tr id='row{{ $item->id }}'>
                                             <td>{{ $item->id }}</td>
                                             <td>{{ $item->title }}</td>
@@ -195,7 +196,7 @@
                                         <tr>
                                             <th class=" text-center" colspan="5">Blog Data Not Found</th>
                                         </tr>
-                                    @endforelse
+                                    @endforelse --}}
 
                                 </tbody>
 
@@ -233,15 +234,49 @@
         });
     </script> --}}
     <script>
-        function deleteBlog(obj, blog_url) {
+        $(document).on('click','.edit', function () {
+            console.log('edit');
+        });
+    </script>
+    <script>
+        $(document).on('click','#delete', function () {
+           var id = $('#delete').attr('data-id');
+           
+          var url="{{route('blog.destroy',+id)}}",+id;
+          alert(url);
+           if (confirm('Are You sure you want to delete this blog')) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "delete",
+                    url: url,
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status == 1) {
+                            swal('', response.msg, 'success');
+                            $(obj).parent().closest('tr').remove();
+                        } else {
+                            swal('', response.msg, 'error');
 
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+    {{-- <script>
+        function deleteBlog(id) {
+
+                
+              
             if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: "delete",
-                    url: blog_url,
+                    url: "route('blog.destroy')"+id,
                     dataType: "json",
                     success: function(response) {
                         if (response.status == 1) {
@@ -255,8 +290,8 @@
                 });
             }
         }
-    </script>
-    {{-- <script>
+    </script> --}}
+    <script>
     
     var table = $('#data-table').DataTable({
             processing: true,
@@ -280,7 +315,7 @@
                 {data: 'actions', name: 'actions',orderable:false,searchable:false,sClass:'text-center'},
             ]
         });
-</script> --}}
+</script>
 </body>
 
 </html>

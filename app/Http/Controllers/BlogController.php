@@ -18,7 +18,17 @@ class BlogController extends Controller
 
         $view_type = 'listing';
         $blog = Blog::all();
-    
+        if ($request->ajax()) {
+          
+            return Datatables::of($blog)
+                ->addIndexColumn()
+                ->addColumn('actions', function($row){
+                    $btn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" data-id="'.$row->id.'" id="delete" class=" btn btn-danger btn-sm">Delete</a>';
+                    return $btn;
+                })
+                ->rawColumns(['actions'])
+                ->make(true);
+        }
         return view('Blog.index', compact('view_type', 'blog'));
     }
 
