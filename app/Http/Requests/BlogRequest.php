@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Validator;
+
 
 class BlogRequest extends FormRequest
 {
@@ -30,6 +32,7 @@ class BlogRequest extends FormRequest
             'status' => 'required',
             'image' => 'required|mimes:png,jpg,jpeg',
         ];
+       
     }
     public function messages()
     {
@@ -42,4 +45,6 @@ class BlogRequest extends FormRequest
             'image.mimes' => 'You can upload only jpg,png,jpeg ',
         ];
     }
+    
+    
 }

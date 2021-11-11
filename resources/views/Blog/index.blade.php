@@ -58,6 +58,7 @@
                                         class="form-control" placeholder="Enter Your Blog Title">
 
                                     <span class="text-danger fw-bold">@error('title')** {{ $message }}
+                                        {!!$validation!!}
                                         **@enderror</span>
                                 </div>
                                 <div class="form-group mb-2">
@@ -217,7 +218,11 @@
     <script src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- ajax delete request --}}
-    {!! JsValidator::formRequest('App\Http\Requests\BlogRequest') !!}
+    @if ($view_type=='add'||$view_type=='edit')
+        
+    {!!$validation!!}  
+    @endif
+    {{-- {!! JsValidator::formRequest('App\Http\Requests\BlogRequest') !!} --}}
     {{-- <script>
         $(document).ready(function() {
 

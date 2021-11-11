@@ -7,7 +7,9 @@ use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use DataTables;
+use Proengsoft\JsValidation\Facades\JsValidatorFacade;
 
+use JsValidator;
 class BlogController extends Controller
 {
 
@@ -32,15 +34,16 @@ class BlogController extends Controller
     {
         $view_type = 'add';
         $blog = Blog::all();
-        return view('Blog.index', compact(['blog', 'view_type']));
+         $validation  = JsValidator::formRequest('App\Http\Requests\BlogRequest');
+        return view('Blog.index', compact(['blog', 'view_type','validation']));
     }
 
-    public function store(BlogRequest $request)
+    public function store(Request $request)
     {
 
       
         $blog = new Blog();
-        $request->validate();
+       
 
 
         if ($request->hasFile('image')) {
@@ -67,14 +70,15 @@ class BlogController extends Controller
     {
         $view_type = 'edit';
         $blog = Blog::find($id);
-
-        return view('Blog.index', compact(['blog', 'view_type']));
+        $validation  = JsValidator::formRequest('App\Http\Requests\BlogRequest');
+        return view('Blog.index', compact(['blog', 'view_type','validation']));
     }
 
-    public function update(BlogRequest $request, $id)
+    public function update(Request $request, $id)
     {
 
-        $request->validate();
+        // $request->validate();
+        
         $blog = Blog::find($id);
         if (File::exists("uploads/blog/" . $blog->image)) {
             File::delete("uploads/blog/" . $blog->image);
