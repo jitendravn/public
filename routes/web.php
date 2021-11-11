@@ -20,4 +20,4 @@ Route::get('/', function () {
 });
 
 Route::resource('blog',BlogController::class);
-Route::get('status/{id}',[BlogController::class,'status']);
+// Route::get('status/{id}',[BlogController::class,'status']);

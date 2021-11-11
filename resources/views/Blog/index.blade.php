@@ -313,7 +313,7 @@
                     data: 'status',
                     name: 'status',
                     render: function(data, type, full, meta) {
-                        return data ? "active" : "not active";
+                        return data ? "Active" : "Not Active";
                     }
                 },
                 {

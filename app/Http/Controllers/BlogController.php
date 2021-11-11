@@ -23,7 +23,7 @@ class BlogController extends Controller
             return Datatables::of($blog)
                 ->addIndexColumn()
                 ->addColumn('actions', function($row){
-                    $btn = '<button class="btn btn-primary btn-sm" id="editBlog">Edit</button> <button onclick="deleteBlog(\''.route("blog.destroy",$row->id).'\')" class="btn btn-danger btn-sm">Delete</button>';
+                    $btn = '<a href="'.route("blog.edit",$row->id).'" class="btn btn-primary btn-sm" id="editBlog">Edit</a href=""> <button onclick="deleteBlog(\''.route("blog.destroy",$row->id).'\')" class="btn btn-danger btn-sm">Delete</button>';
                     return $btn;
                 })
                 ->rawColumns(['actions'])
@@ -128,16 +128,16 @@ class BlogController extends Controller
         }
     }
 
-    public function status($id)
-    {
-        $blog = Blog::find($id);
+    // public function status($id)
+    // {
+    //     $blog = Blog::find($id);
 
-        if ($blog->status == '1') {
-            $blog->status = '0';
-        } else {
-            $blog->status = '1';
-        }
-        $blog->update();
-        return back()->with('blogStatus', 'Blog Status Has been Updated Successfully ');
-    }
+    //     if ($blog->status == '1') {
+    //         $blog->status = '0';
+    //     } else {
+    //         $blog->status = '1';
+    //     }
+    //     $blog->update();
+    //     return back()->with('blogStatus', 'Blog Status Has been Updated Successfully ');
+    // }
 }
