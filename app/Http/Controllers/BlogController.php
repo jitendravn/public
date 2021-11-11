@@ -7,7 +7,6 @@ use App\Models\Blog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use DataTables;
-use Proengsoft\JsValidation\Facades\JsValidatorFacade;
 
 use JsValidator;
 class BlogController extends Controller
