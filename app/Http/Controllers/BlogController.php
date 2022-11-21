@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\File;
 use DataTables;
 
 use JsValidator;
+
 class BlogController extends Controller
 {
 
@@ -19,11 +20,11 @@ class BlogController extends Controller
         $view_type = 'listing';
         $blog = Blog::all();
         if ($request->ajax()) {
-          
+
             return Datatables::of($blog)
                 ->addIndexColumn()
-                ->addColumn('actions', function($row){
-                    $btn = '<a href="'.route("blog.edit",$row->id).'" class="btn btn-primary btn-sm" id="editBlog">Edit</a href=""> <button onclick="deleteBlog(\''.route("blog.destroy",$row->id).'\')" class="btn btn-danger btn-sm">Delete</button>';
+                ->addColumn('actions', function ($row) {
+                    $btn = '<a href="' . route("blog.edit", $row->id) . '" class="btn btn-primary btn-sm" id="editBlog">Edit</a href=""> <button onclick="deleteBlog(\'' . route("blog.destroy", $row->id) . '\')" class="btn btn-danger btn-sm">Delete</button>';
                     return $btn;
                 })
                 ->rawColumns(['actions'])
@@ -43,16 +44,16 @@ class BlogController extends Controller
     {
         $view_type = 'add';
         $blog = Blog::all();
-         $validation  = JsValidator::formRequest('App\Http\Requests\BlogRequest');
-        return view('Blog.index', compact(['blog', 'view_type','validation']));
+        $validation  = JsValidator::formRequest('App\Http\Requests\BlogRequest');
+        return view('Blog.index', compact(['blog', 'view_type', 'validation']));
     }
 
     public function store(Request $request)
     {
 
-      
+
         $blog = new Blog();
-       
+
 
 
         if ($request->hasFile('image')) {
@@ -80,14 +81,14 @@ class BlogController extends Controller
         $view_type = 'edit';
         $blog = Blog::find($id);
         $validation  = JsValidator::formRequest('App\Http\Requests\BlogRequest');
-        return view('Blog.index', compact(['blog', 'view_type','validation']));
+        return view('Blog.index', compact(['blog', 'view_type', 'validation']));
     }
 
     public function update(Request $request, $id)
     {
 
         // $request->validate();
-        
+
         $blog = Blog::find($id);
         if (File::exists("uploads/blog/" . $blog->image)) {
             File::delete("uploads/blog/" . $blog->image);

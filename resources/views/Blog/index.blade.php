@@ -26,6 +26,7 @@
                 <div class="row mb-2">
                     <div class="col-md-3 ">
                         <a href="{{ route('blog.create') }}" class="btn btn-danger">Add</a>
+                        <a href="{{ route('test.index') }}" class="btn btn-danger">Test</a>
 
                     </div>
                 </div>
@@ -45,7 +46,7 @@
                         <form
                             action="{{ $view_type == 'edit' ? route('blog.update', $blog->id) : route('blog.store') }}"
                             method='POST' enctype="multipart/form-data">
-                            @method( ($view_type == 'edit' ? 'PUT' : 'POST') )
+                            @method($view_type == 'edit' ? 'PUT' : 'POST')
 
                             <div class="card-body ">
                                 @csrf
@@ -57,152 +58,139 @@
                                         value="{{ isset($blog->title) && $blog->title != '' ? $blog->title : old('title') }}"
                                         class="form-control" placeholder="Enter Your Blog Title">
 
-                                    <span class="text-danger fw-bold">@error('title')** {{ $message }}
+                                    <span class="text-danger fw-bold">
+                                        @error('title')
+                                            ** {{ $message }}
                                             {!! $validation !!}
-                                        **@enderror</span>
+                                            **
+                                        @enderror
+                                    </span>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="">Description</label>
-                                    <textarea name="description" value="{{ old('description') }} 
-                                        " id="" rows="5" class="form-control"
-                                        placeholder="Enter Your Blog Description">{{ isset($blog->description) && $blog->description != '' ? $blog->description : old('description') }}</textarea>
+                                    <textarea name="description" value="{{ old('description') }}
+                                        " id=""
+                                        rows="5" class="form-control" placeholder="Enter Your Blog Description">{{ isset($blog->description) && $blog->description != '' ? $blog->description : old('description') }}</textarea>
 
-                                    <span class="text-danger fw-bold">@error('description')** {{ $message }}
-                                        **@enderror</span>
+                                    <span class="text-danger fw-bold">
+                                        @error('description')
+                                            ** {{ $message }}
+                                            **
+                                        @enderror
+                                    </span>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label for="">Author</label>
                                     <input type="text" name="author"
                                         value="{{ isset($blog->author) && $blog->author != '' ? $blog->author : old('author') }}"
                                         class="form-control" placeholder="Enter Your Blog Author Name">
-                                    <span class="text-danger fw-bold">@error('author') ** {{ $message }}
-                                        **@enderror</span>
+                                    <span class="text-danger fw-bold">
+                                        @error('author')
+                                            ** {{ $message }}
+                                            **
+                                        @enderror
+                                    </span>
                                 </div>
 
                                 <div class="form-group mb-2 mt-2">
                                     <label for="">Blog Status : </label>
 
-                                    <input class="form-check-input" type="radio" name="status" value="1" @if ($view_type == 'edit')
-                                    {{ $blog->status == 1 ? 'checked' : '' }}
+                                    <input class="form-check-input" type="radio" name="status" value="1"
+                                        @if ($view_type == 'edit') {{ $blog->status == 1 ? 'checked' : '' }} @endif
+                                        id="flexRadioDefault1">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        Active
+                                    </label>
+                                    <input class="form-check-input" type="radio" name="status" value="0"
+                                        @if ($view_type == 'edit') {{ $blog->status == 0 ? 'checked' : '' }} @endif
+                                        id="flexRadioDefault2">
+                                    <label class="form-check-label" for="flexRadioDefault2">
+                                        Inactive
+                                    </label>
+
+                                    <span class="text-danger fw-bold">
+                                        @error('status')
+                                            ** {{ $message }}
+                                            **
+                                        @enderror
+                                    </span>
+
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label for="">Blog Image</label>
+                                    <input type="file" name="image"
+                                        value="   {{ isset($blog->image) && $blog->image != '' ? $blog->image : old('image') }}"
+                                        class="form-control" accept="image/*" />
+
+                                    <span class="text-danger fw-bold">
+                                        @error('image')
+                                            ** {{ $message }}
+                                            **
+                                        @enderror
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="card-footer">
+                                @if ($view_type == 'edit')
+                                    <button class="btn btn-danger form-control">Update</button>
+                                @else
+                                    <button class="btn btn-danger form-control">Save</button>
+                                @endif
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            @else
+                <div class="col-md-12 " id="table">
+                    @if (Session::has('delete'))
+                        <div class="alert alert-danger alert-dismissible fade show delete">
+                            {{ session::get('delete') }}
+                        </div>
+                    @endif
+                    @if (Session::has('update'))
+                        <div class="alert alert-danger alert-dismissible fade show ">
+                            {{ session::get('update') }}
+                        </div>
+                    @endif
+                    @if (Session::has('blogStatus'))
+                        <div class="alert alert-danger alert-dismissible fade show ">
+                            {{ session::get('blogStatus') }}
+                        </div>
+                    @endif
+
+
+                    <div class="card shadow">
+                        <div class="card-header bg-danger text-white">Blog Details</div>
+                        <div class="card-body">
+
+                            <table class="table table-bordered table-striped" id="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Author</th>
+                                        <th>Status</th>
+                                        <th>Image</th>
+                                        <th colspan="2" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
             @endif
-            id="flexRadioDefault1">
-            <label class="form-check-label" for="flexRadioDefault1">
-                Active
-            </label>
-            <input class="form-check-input" type="radio" name="status" value="0" @if ($view_type == 'edit')
-            {{ $blog->status == 0 ? 'checked' : '' }}
-            @endif
-            id="flexRadioDefault2">
-            <label class="form-check-label" for="flexRadioDefault2">
-                Inactive
-            </label>
-
-            <span class="text-danger fw-bold">@error('status') ** {{ $message }}
-                **@enderror</span>
-
         </div>
-        <div class="form-group mb-2">
-            <label for="">Blog Image</label>
-            <input type="file" name="image"
-                value="   {{ isset($blog->image) && $blog->image != '' ? $blog->image : old('image') }}"
-                class="form-control" accept="image/*" />
-
-            <span class="text-danger fw-bold">@error('image') ** {{ $message }}
-                **@enderror</span>
-        </div>
-
-    </div>
-    <div class="card-footer">
-        @if ($view_type == 'edit')
-
-            <button class="btn btn-danger form-control">Update</button>
-        @else
-            <button class="btn btn-danger form-control">Save</button>
-        @endif
-    </div>
-    </form>
-
-    </div>
-    </div>
-@else
-
-    <div class="col-md-12 " id="table">
-        @if (Session::has('delete'))
-            <div class="alert alert-danger alert-dismissible fade show delete">
-                {{ session::get('delete') }}
-            </div>
-        @endif
-        @if (Session::has('update'))
-            <div class="alert alert-danger alert-dismissible fade show ">
-                {{ session::get('update') }}
-            </div>
-        @endif
-        @if (Session::has('blogStatus'))
-            <div class="alert alert-danger alert-dismissible fade show ">
-                {{ session::get('blogStatus') }}
-            </div>
-        @endif
-
-
-        <div class="card shadow">
-            <div class="card-header bg-danger text-white">Blog Details</div>
-            <div class="card-body">
-
-                <table class="table table-bordered table-striped" id="data-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Author</th>
-                            <th>Status</th>
-                            <th>Image</th>
-                            <th colspan="2" class="text-center">Action</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        {{-- @forelse ($blog as $item)
-                                        <tr id='row{{ $item->id }}'>
-                                            <td>{{ $item->id }}</td>
-                                            <td>{{ $item->title }}</td>
-                                            <td>{{ $item->description }}</td>
-                                            <td>{{ $item->author }}</td>
-
-                                            <td><a href="{{ url('status', $item->id) }}"
-                                                    class="btn btn-{{ $item->status == 1 ? 'danger' : 'warning' }}">{{ $item->status == 1 ? 'Active' : 'Inactive' }}</a>
-                                            </td>
-
-                                            <td><img src="{{ asset('uploads/blog/' . $item->image) }}"
-                                                    alt="{{ $item->title }}" class="img-fluid w-50 img-thumbnail">
-                                            </td>
-                                            <td><a href="{{ route('blog.edit', $item->id) }}"
-                                                    class="btn btn-warning">Edit</a>
-                                            </td>
-
-                                            <td><button
-                                                    onclick="deleteBlog(this,'{{ route('blog.destroy', $item->id) }}')"
-                                                    class="btn btn-danger">Delete</button>
-
-                                            </td>
-                                        </tr>
-
-                                    @empty
-                                        <tr>
-                                            <th class=" text-center" colspan="5">Blog Data Not Found</th>
-                                        </tr>
-                                    @endforelse --}}
-
-                    </tbody>
-
-                </table>
-            </div>
-        </div>
-
-    </div>
-    @endif
-    </div>
     </div>
 
 
@@ -216,7 +204,6 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     {{-- ajax delete request --}}
     @if ($view_type == 'add' || $view_type == 'edit')
-
         {!! $validation !!}
     @endif
     {{-- {!! JsValidator::formRequest('App\Http\Requests\BlogRequest') !!} --}}
@@ -229,16 +216,11 @@
             });
         });
     </script> --}}
-    
+
     <script>
         function deleteBlog(url) {
 
-
             //    var id = $(this).data('id');
-            alert(url);
-
-
-
             if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
                     headers: {
@@ -263,8 +245,8 @@
     {{-- <script>
         function deleteBlog(id) {
 
-                
-              
+
+
             if (confirm('Are You sure you want to delete this blog')) {
                 $.ajax({
                     headers: {

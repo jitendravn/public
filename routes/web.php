@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\TestController;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Route;
 
@@ -19,5 +20,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('blog',BlogController::class);
+Route::resource('blog', BlogController::class);
+// Route::resource('test', TestController::class);
+Route::get('test/index', [TestController::class, 'index'])->name("test.index");
 // Route::get('status/{id}',[BlogController::class,'status']);
